@@ -1,0 +1,7 @@
+- InvokeDynamic has three arguments: a 'name', a type and a method handle for the bootstrap method
+  - the name should communicate intent to the bootstrap method. For instance, the name for the indy call to hashcode on record types is 'hashCode'. The bootstrap method knows which method it must genrate
+  - the type passed to indy (2nd arg) is, as I understand, the type of the MethodHandle that should be returned by the bootstrap method. The operands in the stack will be pushed to arguments to the callsite returned by the bootstrap method
+  - the MethodHandle for the bootstrap is usually H_INVOKESTATIC. I could not make a non-static bootstrap work. Maybe it doesn't?
+  - the remainaing arguments are passed to the bootstrap method if it receives a Object[] as its final argument 
+- Boostrap methods can have many signatures, refer to https://docs.oracle.com/en/java/javase/18/docs/api/java.base/java/lang/invoke/package-summary.html
+- 
