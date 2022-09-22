@@ -2,12 +2,13 @@ package mtakeshi1.playground;
 
 import org.openjdk.jmh.annotations.CompilerControl;
 import org.openjdk.jmh.annotations.CompilerControl.Mode;
+import org.openjdk.jmh.infra.Blackhole;
 
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;
 
-@CompilerControl(Mode.DONT_INLINE)
+//@CompilerControl(Mode.DONT_INLINE)
 public class MHInstances {
 
 
@@ -22,6 +23,23 @@ public class MHInstances {
 
     public static String zero() {
         return "0";
+    }
+
+
+    public static String manual(int signal) {
+        if (MHInstances.isEven(signal)) {
+            return (MHInstances.zero());
+        } else {
+            return (MHInstances.one());
+        }
+    }
+
+    public static void manual(Blackhole blackhole, int signal) {
+        if (MHInstances.isEven(signal)) {
+            blackhole.consume(MHInstances.zero());
+        } else {
+            blackhole.consume(MHInstances.one());
+        }
     }
 
     public static final MethodHandle methodHandle;
