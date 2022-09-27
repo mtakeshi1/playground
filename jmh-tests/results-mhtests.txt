@@ -8,7 +8,7 @@
 # Timeout: 10 min per iteration
 # Threads: 1 thread, will synchronize iterations
 # Benchmark mode: Average time, time/op
-# Benchmark: mtakeshi1.playground.MethodHandleTests.manualIfElse
+# Benchmark: mtakeshi1.playground.mhandles.MethodHandleTests.manualIfElse
 
 # Run progress: 0,00% complete, ETA 00:05:00
 # Fork: 1 of 1
@@ -27,12 +27,12 @@ Iteration   5: 1106389,519 ns/op
 # Processing profiler results: LinuxPerfAsmProfiler
 
 
-Result "mtakeshi1.playground.MethodHandleTests.manualIfElse":
+Result "mtakeshi1.playground.mhandles.MethodHandleTests.manualIfElse":
   1113226,198 ±(99.9%) 23752,446 ns/op [Average]
   (min, avg, max) = (1106389,519, 1113226,198, 1118882,307), stdev = 6168,435
   CI (99.9%): [1089473,752, 1136978,644] (assumes normal distribution)
 
-Secondary result "mtakeshi1.playground.MethodHandleTests.manualIfElse:·asm":
+Secondary result "mtakeshi1.playground.mhandles.MethodHandleTests.manualIfElse:·asm":
 PrintAssembly processed: 129799 total address lines.
 Perf output processed (skipped 52.276 seconds):
  Column 1: cycles (49811 events)
@@ -40,7 +40,7 @@ Perf output processed (skipped 52.276 seconds):
 Hottest code regions (>10.00% "cycles" events):
 
 ....[Hottest Region 1]..............................................................................
-c2, level 4, mtakeshi1.playground.MHInstances::manual, version 591 (88 bytes)
+c2, level 4, mtakeshi1.playground.mhandles.MHInstances::manual, version 591 (88 bytes)
 
               handler table  [0x00007f9894884320,0x00007f9894884398] = 120
              [Disassembly]
@@ -55,47 +55,47 @@ c2, level 4, mtakeshi1.playground.MHInstances::manual, version 591 (88 bytes)
   0.08%        0x00007f9894884040:   mov    %eax,-0x14000(%rsp)
   1.04%        0x00007f9894884047:   push   %rbp
   1.07%        0x00007f9894884048:   sub    $0x10,%rsp                   ;*synchronization entry
-                                                                         ; - mtakeshi1.playground.MHInstances::manual@-1 (line 28)
+                                                                         ; - mtakeshi1.playground.mhandles.MHInstances::manual@-1 (line 28)
   0.03%        0x00007f989488404c:   mov    %rsi,%rbp
                0x00007f989488404f:   mov    %edx,%esi
                0x00007f9894884051:   xchg   %ax,%ax
                0x00007f9894884053:   call   0x00007f988ce387a0           ; ImmutableOopMap {rbp=Oop }
                                                                          ;*invokestatic isEven {reexecute=0 rethrow=0 return_oop=0}
-                                                                         ; - mtakeshi1.playground.MHInstances::manual@1 (line 28)
+                                                                         ; - mtakeshi1.playground.mhandles.MHInstances::manual@1 (line 28)
                                                                          ;   {static_call}
   1.04%        0x00007f9894884058:   test   %eax,%eax
   0.01%  ╭     0x00007f989488405a:   je     0x00007f9894884076           ;*ifeq {reexecute=0 rethrow=0 return_oop=0}
-         │                                                               ; - mtakeshi1.playground.MHInstances::manual@4 (line 28)
+         │                                                               ; - mtakeshi1.playground.mhandles.MHInstances::manual@4 (line 28)
   0.01%  │     0x00007f989488405c:   data16 xchg %ax,%ax
   1.10%  │     0x00007f989488405f:   call   0x00007f989488410f           ; ImmutableOopMap {rbp=Oop }
          │                                                               ;*invokestatic zero {reexecute=0 rethrow=0 return_oop=1}
-         │                                                               ; - mtakeshi1.playground.MHInstances::manual@8 (line 29)
+         │                                                               ; - mtakeshi1.playground.mhandles.MHInstances::manual@8 (line 29)
          │                                                               ;   {static_call}
  24.30%  │     0x00007f9894884064:   mov    %rax,%rdx
   0.01%  │     0x00007f9894884067:   test   %rbp,%rbp
          │╭    0x00007f989488406a:   je     0x00007f98948840ac           ;*invokevirtual consume {reexecute=0 rethrow=0 return_oop=0}
-         ││                                                              ; - mtakeshi1.playground.MHInstances::manual@11 (line 29)
+         ││                                                              ; - mtakeshi1.playground.mhandles.MHInstances::manual@11 (line 29)
          ││    0x00007f989488406c:   mov    %rbp,%rsi
          ││    0x00007f989488406f:   call   0x00007f988ce38b60           ; ImmutableOopMap {}
          ││                                                              ;*invokespecial consumeFull {reexecute=0 rethrow=0 return_oop=0}
          ││                                                              ; - org.openjdk.jmh.infra.Blackhole::consume@15 (line 317)
-         ││                                                              ; - mtakeshi1.playground.MHInstances::manual@11 (line 29)
+         ││                                                              ; - mtakeshi1.playground.mhandles.MHInstances::manual@11 (line 29)
          ││                                                              ;   {optimized virtual_call}
  16.55%  ││╭   0x00007f9894884074:   jmp    0x00007f989488408c
          ↘││   0x00007f9894884076:   nop
           ││   0x00007f9894884077:   call   0x00007f989488412d           ; ImmutableOopMap {rbp=Oop }
           ││                                                             ;*invokestatic one {reexecute=0 rethrow=0 return_oop=1}
-          ││                                                             ; - mtakeshi1.playground.MHInstances::manual@18 (line 31)
+          ││                                                             ; - mtakeshi1.playground.mhandles.MHInstances::manual@18 (line 31)
           ││                                                             ;   {static_call}
  24.25%   ││   0x00007f989488407c:   mov    %rax,%rdx
           ││   0x00007f989488407f:   test   %rbp,%rbp
   0.01%   ││╭  0x00007f9894884082:   je     0x00007f989488409f           ;*invokevirtual consume {reexecute=0 rethrow=0 return_oop=0}
-          │││                                                            ; - mtakeshi1.playground.MHInstances::manual@21 (line 31)
+          │││                                                            ; - mtakeshi1.playground.mhandles.MHInstances::manual@21 (line 31)
           │││  0x00007f9894884084:   mov    %rbp,%rsi
           │││  0x00007f9894884087:   call   0x00007f988ce38b60           ; ImmutableOopMap {}
           │││                                                            ;*invokespecial consumeFull {reexecute=0 rethrow=0 return_oop=0}
           │││                                                            ; - org.openjdk.jmh.infra.Blackhole::consume@15 (line 317)
-          │││                                                            ; - mtakeshi1.playground.MHInstances::manual@21 (line 31)
+          │││                                                            ; - mtakeshi1.playground.mhandles.MHInstances::manual@21 (line 31)
           │││                                                            ;   {optimized virtual_call}
  16.73%   │↘│  0x00007f989488408c:   add    $0x10,%rsp
   0.00%   │ │  0x00007f9894884090:   pop    %rbp
@@ -106,7 +106,7 @@ c2, level 4, mtakeshi1.playground.MHInstances::manual, version 591 (88 bytes)
           │    0x00007f98948840a4:   mov    %rax,%rbp
           │    0x00007f98948840a7:   call   0x00007f9894320200           ; ImmutableOopMap {rbp=Oop }
           │                                                              ;*invokevirtual consume {reexecute=0 rethrow=0 return_oop=0}
-          │                                                              ; - mtakeshi1.playground.MHInstances::manual@21 (line 31)
+          │                                                              ; - mtakeshi1.playground.mhandles.MHInstances::manual@21 (line 31)
           │                                                              ;   {runtime_call UncommonTrapBlob}
           ↘    0x00007f98948840ac:   mov    $0xfffffff6,%esi
                0x00007f98948840b1:   mov    %rax,%rbp
@@ -115,12 +115,12 @@ c2, level 4, mtakeshi1.playground.MHInstances::manual, version 591 (88 bytes)
  86.25%  <total for region 1>
 
 ....[Hottest Regions]...............................................................................
- 86.25%         c2, level 4  mtakeshi1.playground.MHInstances::manual, version 591 (88 bytes)
-  4.51%         c2, level 4  mtakeshi1.playground.MHInstances::isEven, version 592 (52 bytes)
+ 86.25%         c2, level 4  mtakeshi1.playground.mhandles.MHInstances::manual, version 591 (88 bytes)
+  4.51%         c2, level 4  mtakeshi1.playground.mhandles.MHInstances::isEven, version 592 (52 bytes)
   4.37%         c2, level 4  org.openjdk.jmh.infra.Blackhole::consumeFull, version 593 (65 bytes)
-  2.23%         c2, level 4  mtakeshi1.playground.MethodHandleTests::manualIfElse, version 596 (16 bytes)
-  1.16%         c1, level 1  mtakeshi1.playground.MHInstances::zero, version 585 (19 bytes)
-  1.05%         c1, level 1  mtakeshi1.playground.MHInstances::one, version 586 (34 bytes)
+  2.23%         c2, level 4  mtakeshi1.playground.mhandles.MethodHandleTests::manualIfElse, version 596 (16 bytes)
+  1.16%         c1, level 1  mtakeshi1.playground.mhandles.MHInstances::zero, version 585 (19 bytes)
+  1.05%         c1, level 1  mtakeshi1.playground.mhandles.MHInstances::one, version 586 (34 bytes)
   0.02%           libjvm.so  ElfSymbolTable::lookup (42 bytes)
   0.01%   [kernel.kallsyms]  x86_pmu_enable_all (0 bytes)
   0.01%   [kernel.kallsyms]  _raw_spin_lock_irqsave (0 bytes)
@@ -140,12 +140,12 @@ c2, level 4, mtakeshi1.playground.MHInstances::manual, version 591 (88 bytes)
 100.00%  <totals>
 
 ....[Hottest Methods (after inlining)]..............................................................
- 86.25%         c2, level 4  mtakeshi1.playground.MHInstances::manual, version 591
-  4.51%         c2, level 4  mtakeshi1.playground.MHInstances::isEven, version 592
+ 86.25%         c2, level 4  mtakeshi1.playground.mhandles.MHInstances::manual, version 591
+  4.51%         c2, level 4  mtakeshi1.playground.mhandles.MHInstances::isEven, version 592
   4.37%         c2, level 4  org.openjdk.jmh.infra.Blackhole::consumeFull, version 593
-  2.23%         c2, level 4  mtakeshi1.playground.MethodHandleTests::manualIfElse, version 596
-  1.16%         c1, level 1  mtakeshi1.playground.MHInstances::zero, version 585
-  1.05%         c1, level 1  mtakeshi1.playground.MHInstances::one, version 586
+  2.23%         c2, level 4  mtakeshi1.playground.mhandles.MethodHandleTests::manualIfElse, version 596
+  1.16%         c1, level 1  mtakeshi1.playground.mhandles.MHInstances::zero, version 585
+  1.05%         c1, level 1  mtakeshi1.playground.mhandles.MHInstances::one, version 586
   0.02%           libjvm.so  ElfSymbolTable::lookup
   0.01%   [kernel.kallsyms]  copy_user_generic_string
   0.01%      hsdis-amd64.so  print_insn
@@ -190,7 +190,7 @@ c2, level 4, mtakeshi1.playground.MHInstances::manual, version 591 (88 bytes)
 # Timeout: 10 min per iteration
 # Threads: 1 thread, will synchronize iterations
 # Benchmark mode: Average time, time/op
-# Benchmark: mtakeshi1.playground.MethodHandleTests.methodHandleExact
+# Benchmark: mtakeshi1.playground.mhandles.MethodHandleTests.methodHandleExact
 
 # Run progress: 33,33% complete, ETA 00:03:28
 # Fork: 1 of 1
@@ -209,12 +209,12 @@ Iteration   5: 1000897,079 ns/op
 # Processing profiler results: LinuxPerfAsmProfiler
 
 
-Result "mtakeshi1.playground.MethodHandleTests.methodHandleExact":
+Result "mtakeshi1.playground.mhandles.MethodHandleTests.methodHandleExact":
   1008119,994 ±(99.9%) 30701,268 ns/op [Average]
   (min, avg, max) = (998132,913, 1008119,994, 1015385,781), stdev = 7973,022
   CI (99.9%): [977418,726, 1038821,262] (assumes normal distribution)
 
-Secondary result "mtakeshi1.playground.MethodHandleTests.methodHandleExact:·asm":
+Secondary result "mtakeshi1.playground.mhandles.MethodHandleTests.methodHandleExact:·asm":
 PrintAssembly processed: 145777 total address lines.
 Perf output processed (skipped 52.314 seconds):
  Column 1: cycles (49855 events)
@@ -222,11 +222,11 @@ Perf output processed (skipped 52.314 seconds):
 Hottest code regions (>10.00% "cycles" events):
 
 ....[Hottest Region 1]..............................................................................
-c2, level 4, mtakeshi1.playground.MethodHandleTests::methodHandleExact, version 665 (52 bytes)
+c2, level 4, mtakeshi1.playground.mhandles.MethodHandleTests::methodHandleExact, version 665 (52 bytes)
 
                 0x00007f8454889ce7:   push   %rbp
                 0x00007f8454889ce8:   sub    $0x20,%rsp                   ;*synchronization entry
-                                                                          ; - mtakeshi1.playground.MethodHandleTests::methodHandleExact@-1 (line 30)
+                                                                          ; - mtakeshi1.playground.mhandles.MethodHandleTests::methodHandleExact@-1 (line 30)
                 0x00007f8454889cec:   mov    %rdx,(%rsp)
                 0x00007f8454889cf0:   test   %rdx,%rdx
          ╭      0x00007f8454889cf3:   je     0x00007f8454889d4c
@@ -241,23 +241,23 @@ c2, level 4, mtakeshi1.playground.MethodHandleTests::methodHandleExact, version 
          ││ │                                                             ; - java.lang.invoke.DelegatingMethodHandle$Holder::delegate@13
          ││ │                                                             ; - java.lang.invoke.LambdaForm$MH/0x0000000801081000::guard@96
          ││ │                                                             ; - java.lang.invoke.LambdaForm$MH/0x0000000801080c00::invokeExact_MT@19
-         ││ │                                                             ; - mtakeshi1.playground.MethodHandleTests::methodHandleExact@13 (line 31)
-         ││ │                                                             ;   {static_call mtakeshi1.playground.MHInstances::one}
+         ││ │                                                             ; - mtakeshi1.playground.mhandles.MethodHandleTests::methodHandleExact@13 (line 31)
+         ││ │                                                             ;   {static_call mtakeshi1.playground.mhandles.MHInstances::one}
  24.67%  ││ │   0x00007f8454889d08:   mov    %rax,%rdx                    ;*areturn {reexecute=0 rethrow=0 return_oop=0}
          ││ │                                                             ; - java.lang.invoke.LambdaForm$MH/0x0000000801081000::guard@99
          ││ │                                                             ; - java.lang.invoke.LambdaForm$MH/0x0000000801080c00::invokeExact_MT@19
-         ││ │                                                             ; - mtakeshi1.playground.MethodHandleTests::methodHandleExact@13 (line 31)
+         ││ │                                                             ; - mtakeshi1.playground.mhandles.MethodHandleTests::methodHandleExact@13 (line 31)
   0.02%  ││ │↗  0x00007f8454889d0b:   mov    (%rsp),%rsi
          ││ ││  0x00007f8454889d0f:   call   0x00007f8454888240           ; ImmutableOopMap {[0]=Oop }
          ││ ││                                                            ;*invokespecial consumeFull {reexecute=0 rethrow=0 return_oop=0}
          ││ ││                                                            ; - org.openjdk.jmh.infra.Blackhole::consume@15 (line 317)
-         ││ ││                                                            ; - mtakeshi1.playground.MethodHandleTests::methodHandleExact@16 (line 31)
+         ││ ││                                                            ; - mtakeshi1.playground.mhandles.MethodHandleTests::methodHandleExact@16 (line 31)
          ││ ││                                                            ;   {optimized virtual_call}
  35.91%  ││ ││  0x00007f8454889d14:   inc    %ebp                         ;*iinc {reexecute=0 rethrow=0 return_oop=0}
-         ││ ││                                                            ; - mtakeshi1.playground.MethodHandleTests::methodHandleExact@19 (line 30)
+         ││ ││                                                            ; - mtakeshi1.playground.mhandles.MethodHandleTests::methodHandleExact@19 (line 30)
   0.03%  ││ ││  0x00007f8454889d16:   cmp    $0x186a0,%ebp
          ││╭││  0x00007f8454889d1c:   jge    0x00007f8454889d39           ;*aload_1 {reexecute=0 rethrow=0 return_oop=0}
-         │││││                                                            ; - mtakeshi1.playground.MethodHandleTests::methodHandleExact@8 (line 31)
+         │││││                                                            ; - mtakeshi1.playground.mhandles.MethodHandleTests::methodHandleExact@8 (line 31)
          │↘│││  0x00007f8454889d1e:   mov    %ebp,%esi
          │ │││  0x00007f8454889d20:   data16 xchg %ax,%ax
          │ │││  0x00007f8454889d23:   call   0x00007f8454887400           ; ImmutableOopMap {[0]=Oop }
@@ -265,13 +265,13 @@ c2, level 4, mtakeshi1.playground.MethodHandleTests::methodHandleExact, version 
          │ │││                                                            ; - java.lang.invoke.DirectMethodHandle$Holder::invokeStatic@10
          │ │││                                                            ; - java.lang.invoke.LambdaForm$MH/0x0000000801081000::guard@39
          │ │││                                                            ; - java.lang.invoke.LambdaForm$MH/0x0000000801080c00::invokeExact_MT@19
-         │ │││                                                            ; - mtakeshi1.playground.MethodHandleTests::methodHandleExact@13 (line 31)
-         │ │││                                                            ;   {static_call mtakeshi1.playground.MHInstances::isEven}
+         │ │││                                                            ; - mtakeshi1.playground.mhandles.MethodHandleTests::methodHandleExact@13 (line 31)
+         │ │││                                                            ;   {static_call mtakeshi1.playground.mhandles.MHInstances::isEven}
   0.02%  │ │││  0x00007f8454889d28:   test   %eax,%eax
   0.02%  │ │╰│  0x00007f8454889d2a:   je     0x00007f8454889d00           ;*ifeq {reexecute=0 rethrow=0 return_oop=0}
          │ │ │                                                            ; - java.lang.invoke.LambdaForm$MH/0x0000000801081000::guard@62
          │ │ │                                                            ; - java.lang.invoke.LambdaForm$MH/0x0000000801080c00::invokeExact_MT@19
-         │ │ │                                                            ; - mtakeshi1.playground.MethodHandleTests::methodHandleExact@13 (line 31)
+         │ │ │                                                            ; - mtakeshi1.playground.mhandles.MethodHandleTests::methodHandleExact@13 (line 31)
          │ │ │  0x00007f8454889d2c:   data16 xchg %ax,%ax
   0.01%  │ │ │  0x00007f8454889d2f:   call   0x00007f84548864a0           ; ImmutableOopMap {[0]=Oop }
          │ │ │                                                            ;*invokestatic linkToStatic {reexecute=0 rethrow=0 return_oop=1}
@@ -280,8 +280,8 @@ c2, level 4, mtakeshi1.playground.MethodHandleTests::methodHandleExact, version 
          │ │ │                                                            ; - java.lang.invoke.DelegatingMethodHandle$Holder::delegate@13
          │ │ │                                                            ; - java.lang.invoke.LambdaForm$MH/0x0000000801081000::guard@77
          │ │ │                                                            ; - java.lang.invoke.LambdaForm$MH/0x0000000801080c00::invokeExact_MT@19
-         │ │ │                                                            ; - mtakeshi1.playground.MethodHandleTests::methodHandleExact@13 (line 31)
-         │ │ │                                                            ;   {static_call mtakeshi1.playground.MHInstances::zero}
+         │ │ │                                                            ; - mtakeshi1.playground.mhandles.MethodHandleTests::methodHandleExact@13 (line 31)
+         │ │ │                                                            ;   {static_call mtakeshi1.playground.mhandles.MHInstances::zero}
  24.02%  │ │ │  0x00007f8454889d34:   mov    %rax,%rdx
   0.00%  │ │ ╰  0x00007f8454889d37:   jmp    0x00007f8454889d0b
          │ ↘    0x00007f8454889d39:   add    $0x20,%rsp
@@ -298,11 +298,11 @@ c2, level 4, mtakeshi1.playground.MethodHandleTests::methodHandleExact, version 
  84.70%  <total for region 1>
 
 ....[Hottest Regions]...............................................................................
- 84.70%           c2, level 4  mtakeshi1.playground.MethodHandleTests::methodHandleExact, version 665 (52 bytes)
+ 84.70%           c2, level 4  mtakeshi1.playground.mhandles.MethodHandleTests::methodHandleExact, version 665 (52 bytes)
   4.98%           c2, level 4  org.openjdk.jmh.infra.Blackhole::consumeFull, version 659 (64 bytes)
-  4.78%           c2, level 4  mtakeshi1.playground.MHInstances::isEven, version 655 (39 bytes)
-  2.60%           c1, level 1  mtakeshi1.playground.MHInstances::zero, version 637 (34 bytes)
-  2.40%           c1, level 1  mtakeshi1.playground.MHInstances::one, version 638 (34 bytes)
+  4.78%           c2, level 4  mtakeshi1.playground.mhandles.MHInstances::isEven, version 655 (39 bytes)
+  2.60%           c1, level 1  mtakeshi1.playground.mhandles.MHInstances::zero, version 637 (34 bytes)
+  2.40%           c1, level 1  mtakeshi1.playground.mhandles.MHInstances::one, version 638 (34 bytes)
   0.02%     [kernel.kallsyms]  x86_pmu_enable_all (0 bytes)
   0.02%             libjvm.so  ElfSymbolTable::lookup (38 bytes)
   0.02%     [kernel.kallsyms]  finish_task_switch.isra.0 (0 bytes)
@@ -323,11 +323,11 @@ c2, level 4, mtakeshi1.playground.MethodHandleTests::methodHandleExact, version 
 100.00%  <totals>
 
 ....[Hottest Methods (after inlining)]..............................................................
- 84.70%           c2, level 4  mtakeshi1.playground.MethodHandleTests::methodHandleExact, version 665
+ 84.70%           c2, level 4  mtakeshi1.playground.mhandles.MethodHandleTests::methodHandleExact, version 665
   4.98%           c2, level 4  org.openjdk.jmh.infra.Blackhole::consumeFull, version 659
-  4.78%           c2, level 4  mtakeshi1.playground.MHInstances::isEven, version 655
-  2.60%           c1, level 1  mtakeshi1.playground.MHInstances::zero, version 637
-  2.40%           c1, level 1  mtakeshi1.playground.MHInstances::one, version 638
+  4.78%           c2, level 4  mtakeshi1.playground.mhandles.MHInstances::isEven, version 655
+  2.60%           c1, level 1  mtakeshi1.playground.mhandles.MHInstances::zero, version 637
+  2.40%           c1, level 1  mtakeshi1.playground.mhandles.MHInstances::one, version 638
   0.02%             libjvm.so  ElfSymbolTable::lookup
   0.02%     [kernel.kallsyms]  x86_pmu_enable_all
   0.02%             libc.so.6  __vfprintf_internal
@@ -376,7 +376,7 @@ c2, level 4, mtakeshi1.playground.MethodHandleTests::methodHandleExact, version 
 # Timeout: 10 min per iteration
 # Threads: 1 thread, will synchronize iterations
 # Benchmark mode: Average time, time/op
-# Benchmark: mtakeshi1.playground.MethodHandleTests.methodHandleInvoke
+# Benchmark: mtakeshi1.playground.mhandles.MethodHandleTests.methodHandleInvoke
 
 # Run progress: 66,67% complete, ETA 00:01:44
 # Fork: 1 of 1
@@ -395,12 +395,12 @@ Iteration   5: 1009062,935 ns/op
 # Processing profiler results: LinuxPerfAsmProfiler
 
 
-Result "mtakeshi1.playground.MethodHandleTests.methodHandleInvoke":
+Result "mtakeshi1.playground.mhandles.MethodHandleTests.methodHandleInvoke":
   1010774,708 ±(99.9%) 8181,016 ns/op [Average]
   (min, avg, max) = (1008256,153, 1010774,708, 1013035,364), stdev = 2124,584
   CI (99.9%): [1002593,692, 1018955,724] (assumes normal distribution)
 
-Secondary result "mtakeshi1.playground.MethodHandleTests.methodHandleInvoke:·asm":
+Secondary result "mtakeshi1.playground.mhandles.MethodHandleTests.methodHandleInvoke:·asm":
 PrintAssembly processed: 130414 total address lines.
 Perf output processed (skipped 52.165 seconds):
  Column 1: cycles (49702 events)
@@ -408,12 +408,12 @@ Perf output processed (skipped 52.165 seconds):
 Hottest code regions (>10.00% "cycles" events):
 
 ....[Hottest Region 1]..............................................................................
-c2, level 4, mtakeshi1.playground.MethodHandleTests::methodHandleInvoke, version 615 (49 bytes)
+c2, level 4, mtakeshi1.playground.mhandles.MethodHandleTests::methodHandleInvoke, version 615 (49 bytes)
 
               0x00007f817c889260:   mov    %eax,-0x14000(%rsp)
               0x00007f817c889267:   push   %rbp
               0x00007f817c889268:   sub    $0x20,%rsp                   ;*synchronization entry
-                                                                        ; - mtakeshi1.playground.MethodHandleTests::methodHandleInvoke@-1 (line 37)
+                                                                        ; - mtakeshi1.playground.mhandles.MethodHandleTests::methodHandleInvoke@-1 (line 37)
               0x00007f817c88926c:   mov    %rdx,(%rsp)
               0x00007f817c889270:   test   %rdx,%rdx
               0x00007f817c889273:   je     0x00007f817c8892c4
@@ -427,23 +427,23 @@ c2, level 4, mtakeshi1.playground.MethodHandleTests::methodHandleInvoke, version
          ││                                                             ; - java.lang.invoke.DelegatingMethodHandle$Holder::delegate@13
          ││                                                             ; - java.lang.invoke.LambdaForm$MH/0x0000000801081000::guard@96
          ││                                                             ; - java.lang.invoke.LambdaForm$MH/0x0000000801080c00::invoke_MT@18
-         ││                                                             ; - mtakeshi1.playground.MethodHandleTests::methodHandleInvoke@13 (line 38)
-         ││                                                             ;   {static_call mtakeshi1.playground.MHInstances::one}
+         ││                                                             ; - mtakeshi1.playground.mhandles.MethodHandleTests::methodHandleInvoke@13 (line 38)
+         ││                                                             ;   {static_call mtakeshi1.playground.mhandles.MHInstances::one}
  24.53%  ││   0x00007f817c889280:   mov    %rax,%rdx                    ;*areturn {reexecute=0 rethrow=0 return_oop=0}
          ││                                                             ; - java.lang.invoke.LambdaForm$MH/0x0000000801081000::guard@99
          ││                                                             ; - java.lang.invoke.LambdaForm$MH/0x0000000801080c00::invoke_MT@18
-         ││                                                             ; - mtakeshi1.playground.MethodHandleTests::methodHandleInvoke@13 (line 38)
+         ││                                                             ; - mtakeshi1.playground.mhandles.MethodHandleTests::methodHandleInvoke@13 (line 38)
   0.01%  ││↗  0x00007f817c889283:   mov    (%rsp),%rsi
          │││  0x00007f817c889287:   call   0x00007f817c31af80           ; ImmutableOopMap {[0]=Oop }
          │││                                                            ;*invokespecial consumeFull {reexecute=0 rethrow=0 return_oop=0}
          │││                                                            ; - org.openjdk.jmh.infra.Blackhole::consume@15 (line 317)
-         │││                                                            ; - mtakeshi1.playground.MethodHandleTests::methodHandleInvoke@16 (line 38)
+         │││                                                            ; - mtakeshi1.playground.mhandles.MethodHandleTests::methodHandleInvoke@16 (line 38)
          │││                                                            ;   {optimized virtual_call}
  36.01%  │││  0x00007f817c88928c:   inc    %ebp                         ;*iinc {reexecute=0 rethrow=0 return_oop=0}
-         │││                                                            ; - mtakeshi1.playground.MethodHandleTests::methodHandleInvoke@19 (line 37)
+         │││                                                            ; - mtakeshi1.playground.mhandles.MethodHandleTests::methodHandleInvoke@19 (line 37)
   0.01%  │││  0x00007f817c88928e:   cmp    $0x186a0,%ebp
   0.00%  │││  0x00007f817c889294:   jge    0x00007f817c8892b1           ;*aload_1 {reexecute=0 rethrow=0 return_oop=0}
-         │││                                                            ; - mtakeshi1.playground.MethodHandleTests::methodHandleInvoke@8 (line 38)
+         │││                                                            ; - mtakeshi1.playground.mhandles.MethodHandleTests::methodHandleInvoke@8 (line 38)
          ↘││  0x00007f817c889296:   mov    %ebp,%esi
           ││  0x00007f817c889298:   data16 xchg %ax,%ax
           ││  0x00007f817c88929b:   call   0x00007f817c886a00           ; ImmutableOopMap {[0]=Oop }
@@ -451,13 +451,13 @@ c2, level 4, mtakeshi1.playground.MethodHandleTests::methodHandleInvoke, version
           ││                                                            ; - java.lang.invoke.DirectMethodHandle$Holder::invokeStatic@10
           ││                                                            ; - java.lang.invoke.LambdaForm$MH/0x0000000801081000::guard@39
           ││                                                            ; - java.lang.invoke.LambdaForm$MH/0x0000000801080c00::invoke_MT@18
-          ││                                                            ; - mtakeshi1.playground.MethodHandleTests::methodHandleInvoke@13 (line 38)
-          ││                                                            ;   {static_call mtakeshi1.playground.MHInstances::isEven}
+          ││                                                            ; - mtakeshi1.playground.mhandles.MethodHandleTests::methodHandleInvoke@13 (line 38)
+          ││                                                            ;   {static_call mtakeshi1.playground.mhandles.MHInstances::isEven}
   0.01%   ││  0x00007f817c8892a0:   test   %eax,%eax
   0.00%   ╰│  0x00007f817c8892a2:   je     0x00007f817c889279           ;*ifeq {reexecute=0 rethrow=0 return_oop=0}
            │                                                            ; - java.lang.invoke.LambdaForm$MH/0x0000000801081000::guard@62
            │                                                            ; - java.lang.invoke.LambdaForm$MH/0x0000000801080c00::invoke_MT@18
-           │                                                            ; - mtakeshi1.playground.MethodHandleTests::methodHandleInvoke@13 (line 38)
+           │                                                            ; - mtakeshi1.playground.mhandles.MethodHandleTests::methodHandleInvoke@13 (line 38)
            │  0x00007f817c8892a4:   data16 xchg %ax,%ax
            │  0x00007f817c8892a7:   call   0x00007f817c884e20           ; ImmutableOopMap {[0]=Oop }
            │                                                            ;*invokestatic linkToStatic {reexecute=0 rethrow=0 return_oop=1}
@@ -466,8 +466,8 @@ c2, level 4, mtakeshi1.playground.MethodHandleTests::methodHandleInvoke, version
            │                                                            ; - java.lang.invoke.DelegatingMethodHandle$Holder::delegate@13
            │                                                            ; - java.lang.invoke.LambdaForm$MH/0x0000000801081000::guard@77
            │                                                            ; - java.lang.invoke.LambdaForm$MH/0x0000000801080c00::invoke_MT@18
-           │                                                            ; - mtakeshi1.playground.MethodHandleTests::methodHandleInvoke@13 (line 38)
-           │                                                            ;   {static_call mtakeshi1.playground.MHInstances::zero}
+           │                                                            ; - mtakeshi1.playground.mhandles.MethodHandleTests::methodHandleInvoke@13 (line 38)
+           │                                                            ;   {static_call mtakeshi1.playground.mhandles.MHInstances::zero}
  24.35%    │  0x00007f817c8892ac:   mov    %rax,%rdx
            ╰  0x00007f817c8892af:   jmp    0x00007f817c889283
               0x00007f817c8892b1:   add    $0x20,%rsp
@@ -475,11 +475,11 @@ c2, level 4, mtakeshi1.playground.MethodHandleTests::methodHandleInvoke, version
  84.93%  <total for region 1>
 
 ....[Hottest Regions]...............................................................................
- 84.93%         c2, level 4  mtakeshi1.playground.MethodHandleTests::methodHandleInvoke, version 615 (49 bytes)
-  5.01%         c2, level 4  mtakeshi1.playground.MHInstances::isEven, version 605 (39 bytes)
+ 84.93%         c2, level 4  mtakeshi1.playground.mhandles.MethodHandleTests::methodHandleInvoke, version 615 (49 bytes)
+  5.01%         c2, level 4  mtakeshi1.playground.mhandles.MHInstances::isEven, version 605 (39 bytes)
   4.88%         c2, level 4  org.openjdk.jmh.infra.Blackhole::consumeFull, version 609 (64 bytes)
-  2.57%         c1, level 1  mtakeshi1.playground.MHInstances::zero, version 583 (34 bytes)
-  2.39%         c1, level 1  mtakeshi1.playground.MHInstances::one, version 584 (34 bytes)
+  2.57%         c1, level 1  mtakeshi1.playground.mhandles.MHInstances::zero, version 583 (34 bytes)
+  2.39%         c1, level 1  mtakeshi1.playground.mhandles.MHInstances::one, version 584 (34 bytes)
   0.03%   [kernel.kallsyms]  x86_pmu_enable (5 bytes)
   0.01%   [kernel.kallsyms]  x86_pmu_enable_all (0 bytes)
   0.01%   [kernel.kallsyms]  native_write_msr (0 bytes)
@@ -500,11 +500,11 @@ c2, level 4, mtakeshi1.playground.MethodHandleTests::methodHandleInvoke, version
 100.00%  <totals>
 
 ....[Hottest Methods (after inlining)]..............................................................
- 84.93%         c2, level 4  mtakeshi1.playground.MethodHandleTests::methodHandleInvoke, version 615
-  5.01%         c2, level 4  mtakeshi1.playground.MHInstances::isEven, version 605
+ 84.93%         c2, level 4  mtakeshi1.playground.mhandles.MethodHandleTests::methodHandleInvoke, version 615
+  5.01%         c2, level 4  mtakeshi1.playground.mhandles.MHInstances::isEven, version 605
   4.88%         c2, level 4  org.openjdk.jmh.infra.Blackhole::consumeFull, version 609
-  2.57%         c1, level 1  mtakeshi1.playground.MHInstances::zero, version 583
-  2.39%         c1, level 1  mtakeshi1.playground.MHInstances::one, version 584
+  2.57%         c1, level 1  mtakeshi1.playground.mhandles.MHInstances::zero, version 583
+  2.39%         c1, level 1  mtakeshi1.playground.mhandles.MHInstances::one, version 584
   0.03%   [kernel.kallsyms]  x86_pmu_enable
   0.01%   [kernel.kallsyms]  __perf_event_task_sched_in
   0.01%   [kernel.kallsyms]  raw_spin_rq_unlock

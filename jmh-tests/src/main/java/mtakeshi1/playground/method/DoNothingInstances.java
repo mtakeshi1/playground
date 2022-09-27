@@ -1,13 +1,10 @@
-package mtakeshi1.playground;
-
-import org.openjdk.jmh.annotations.CompilerControl;
-import org.openjdk.jmh.annotations.CompilerControl.Mode;
+package mtakeshi1.playground.method;
 
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Method;
 
-@CompilerControl(Mode.DONT_INLINE)
+//@CompilerControl(Mode.DONT_INLINE)
 public class DoNothingInstances implements DoNothing {
 
     public static int doNothingHere(int x) {

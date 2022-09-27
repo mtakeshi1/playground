@@ -1,7 +1,5 @@
-package mtakeshi1.playground;
+package mtakeshi1.playground.mhandles;
 
-import org.openjdk.jmh.annotations.CompilerControl;
-import org.openjdk.jmh.annotations.CompilerControl.Mode;
 import org.openjdk.jmh.infra.Blackhole;
 
 import java.lang.invoke.MethodHandle;

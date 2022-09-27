@@ -65,12 +65,18 @@ object AST {
     }
   }
 
+  object ListMethodHandles {
+    val listType = Class.forName("scala.collection.immutable.List")
+    val emptyListHandle = MethodHandles.constant(listType, List()) // () -> List
+    val prepended = MethodHandles.publicLookup().findVirtual(listType, "prepended", MethodType.methodType(classOf[Any], classOf[Any]))
+  }
+
   case class ExpList(nodes: Node*) extends Node {
-    override def eval(ctx: Context): Any = (for(n <- nodes) yield n(ctx)).toList
+    override def eval(ctx: Context): Any = (for(n <- nodes) yield n(ctx)).toList.last
 
     private def transformHandle(n: List[Node]): MethodHandle = {
       n match {
-        case Nil => MethodHandles.dropArguments(MethodHandles.constant(List.getClass, List()), 0, classOf[Context])
+        case Nil => MethodHandles.dropArguments(ListMethodHandles.emptyListHandle, 0, classOf[Context])
         case head :: next => {
 
           ???

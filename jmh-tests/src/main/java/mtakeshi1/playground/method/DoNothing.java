@@ -1,4 +1,4 @@
-package mtakeshi1.playground;
+package mtakeshi1.playground.method;
 
 import org.openjdk.jmh.annotations.CompilerControl;
 import org.openjdk.jmh.annotations.CompilerControl.Mode;
