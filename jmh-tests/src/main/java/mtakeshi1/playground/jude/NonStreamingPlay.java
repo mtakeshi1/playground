@@ -13,28 +13,16 @@ import static java.util.Collections.unmodifiableList;
 public class NonStreamingPlay {
 
     static double evaluateIntegral(double[] shiftVec, double[] iterVec, int boost, IntegrableFunction f) {
-        record Stack(int count, double integral) {
-            boolean isTerminated() {
-                return count == 0;
-            }
-        }
-        Stack stack = new Stack(boost, 0D);
-        while (!stack.isTerminated()) {
-            int count = stack.count;
-            double integral = stack.integral;
-
-
+        double integral = 0;
+        for (int count = boost; count >= 0; count--) {
             double[] point = new double[shiftVec.length];
             for (int i = 0; i < point.length; i++) {
                 point[i] = (shiftVec[i] + count * iterVec[i]) % 1.0;
             }
             double evaluation = f.evaluate(point);
-            stack = new Stack(
-                    count - 1,
-                    integral + (evaluation - integral) / (boost - stack.count + 1)
-            );
+            integral = integral + (evaluation - integral) / (boost - count + 1);
         }
-        return stack.integral;
+        return integral;
     }
 
     public static Statistics evaluateStatistics2(int dim, LinkedList list, int boost, IntegrableFunction f) {
@@ -42,7 +30,7 @@ public class NonStreamingPlay {
         return evaluateStatisticsR(list, boost, f, iterVec, 1, 0, 0);
     }
 
-    static Statistics evaluateStatisticsR(LinkedList list, int boost, IntegrableFunction f, double[] iterVec, int k, double avg, double sqSum) {
+    public static Statistics evaluateStatisticsR(LinkedList list, int boost, IntegrableFunction f, double[] iterVec, int k, double avg, double sqSum) {
         if (list == null) {
             double variance = sqSum / (k - 1);
             double stdDeviation = sqrt(variance);

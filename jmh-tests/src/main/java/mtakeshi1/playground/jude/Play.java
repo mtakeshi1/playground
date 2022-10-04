@@ -15,7 +15,7 @@ import static java.util.Collections.unmodifiableList;
 
 public class Play {
 
-    static double[] evaluateIterationVector(int dim) {
+    public static double[] evaluateIterationVector(int dim) {
         double phi = NaN; {
             record Stack(double cur, double prev) {
                 boolean hasConverged() {
@@ -64,8 +64,6 @@ public class Play {
         }
         return stack.integral;
     }
-
-    record Statistics(double avg, double variance, double[] confidentInterval95) {}
 
     public static Statistics evaluateStatistics2(int dim, LinkedList list, int boost, IntegrableFunction f) {
         double[] iterVec = evaluateIterationVector(dim);
@@ -154,7 +152,7 @@ public class Play {
                 Variance: %f
                 Confident Interval 95%%: %s
                 """,
-                statistics.avg(), statistics.variance(), Arrays.toString(statistics.confidentInterval95));
+                statistics.avg(), statistics.variance(), Arrays.toString(statistics.confidentInterval95()));
         System.out.printf("%dms%n", TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - ts));
         /*
 
