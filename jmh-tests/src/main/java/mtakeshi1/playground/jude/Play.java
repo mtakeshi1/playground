@@ -42,7 +42,7 @@ public class Play {
                 .toArray();
     }
 
-    static double evaluateIntegral(double[] shiftVec, double[] iterVec, int boost, IntegrableFunction f) {
+    static double evaluateIntegral(double[] shiftVec, double[] iterVec, int boost, IntegrableFunction f, int x) {
         record Stack(int count, double integral) {
             boolean isTerminated() {
                 return count == 0;
@@ -61,16 +61,20 @@ public class Play {
                     count - 1,
                     integral + (evaluation - integral) / (boost - stack.count + 1)
             );
+            if (x == 6) {
+                System.out.printf("%s %d %.10g %n", Arrays.toString(point), count, stack.integral);
+            }
         }
+//        System.out.printf("%s - integrale: %.8g%n", Arrays.toString(shiftVec), stack.integral);
         return stack.integral;
     }
 
     public static Statistics evaluateStatistics2(int dim, LinkedList list, int boost, IntegrableFunction f) {
         double[] iterVec = evaluateIterationVector(dim);
-        return evaluateStatisticsR(list, boost, f, iterVec, 1, 0, 0);
+        return evaluateStatisticsR(list, boost, f, iterVec, 1, 0, 0, 0);
     }
 
-    static Statistics evaluateStatisticsR(LinkedList list, int boost, IntegrableFunction f, double[] iterVec, int k, double avg, double sqSum) {
+    static Statistics evaluateStatisticsR(LinkedList list, int boost, IntegrableFunction f, double[] iterVec, int k, double avg, double sqSum, int x) {
         if (list == null) {
             double variance = sqSum / (k - 1);
             double stdDeviation = sqrt(variance);
@@ -79,10 +83,10 @@ public class Play {
                     new double[] {avg - 2.1 * stdDeviation, avg + 2.1 * stdDeviation}
             );
         } else {
-            double integral = evaluateIntegral(list.val(), iterVec, boost, f);
+            double integral = evaluateIntegral(list.val(), iterVec, boost, f, x);
             double nextAvg = avg + (integral - avg) / k;
             double nextSqSum = sqSum + (integral - avg) * (integral - nextAvg);
-            return evaluateStatisticsR(list.next(), boost, f, iterVec, k+1, nextAvg, nextSqSum);
+            return evaluateStatisticsR(list.next(), boost, f, iterVec, k+1, nextAvg, nextSqSum, x + 1);
         }
     }
 
@@ -93,8 +97,9 @@ public class Play {
         }
 
         var stack = new Stack(shifts, 1, 0D, 0D);
+        int x= 0;
         while(! stack.isTerminated()) {
-            double integral = evaluateIntegral(stack.shifts.get(0), iterVec, boost, f);
+            double integral = evaluateIntegral(stack.shifts.get(0), iterVec, boost, f, x++);
             double nextAvg = stack.avg() + (integral - stack.avg()) / stack.k();
             double nextSqSum = stack.sqSum() + (integral - stack.avg()) * (integral - nextAvg);
             stack = new Stack(
@@ -117,7 +122,7 @@ public class Play {
 
     public static void main(String[] args) {
         int dimension = 3;
-        int sampleSize = 1 << 5;
+        int sampleSize = 1 << 3;
         int boost = 1 << 19;
 
         IntegrableFunction f = $ -> {
@@ -144,8 +149,7 @@ public class Play {
 
 
 
-//        var statistics = evaluateStatistics(dimension, sample, boost, f);
-        var statistics = evaluateStatistics2(dimension, LinkedList.fromList(sample, 0), boost, f);
+        var statistics = evaluateStatistics(dimension, sample, boost, f);
 
         System.out.printf("""
                 Avg: %f
