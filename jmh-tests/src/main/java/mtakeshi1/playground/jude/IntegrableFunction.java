@@ -7,7 +7,6 @@ import static java.lang.Math.sin;
 public interface IntegrableFunction {
     double evaluate(double... args);
 
-
     IntegrableFunction standardFunction = $ -> {
         double x = $[0];
         double y = $[1];

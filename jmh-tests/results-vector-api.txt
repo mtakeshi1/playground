@@ -1,0 +1,21 @@
+Intel(R) Core(TM) i7-7700HQ CPU @ 2.80GHz
+
+openjdk version "17.0.4" 2022-07-19
+OpenJDK Runtime Environment GraalVM CE 22.2.0 (build 17.0.4+8-jvmci-22.2-b06)
+OpenJDK 64-Bit Server VM GraalVM CE 22.2.0 (build 17.0.4+8-jvmci-22.2-b06, mixed mode, sharing)
+
+Benchmark             Mode  Cnt     Score     Error  Units
+JMHPlayV2.sequential  avgt    5  1183.800 ± 211.443  ms/op
+JMHPlayV2.vector128   avgt    5  2617.997 ± 412.278  ms/op
+JMHPlayV2.vector256   avgt    5   676.781 ± 353.268  ms/op
+JMHPlayV2.vector512   avgt    5  1552.036 ± 405.355  ms/op
+
+openjdk version "19" 2022-09-20
+OpenJDK Runtime Environment Zulu19.28+81-CA (build 19+36)
+OpenJDK 64-Bit Server VM Zulu19.28+81-CA (build 19+36, mixed mode, sharing)
+
+Benchmark             Mode  Cnt     Score     Error  Units
+JMHPlayV2.sequential  avgt    5  3241.032 ± 243.618  ms/op
+JMHPlayV2.vector128   avgt    5  1730.990 ± 442.393  ms/op
+JMHPlayV2.vector256   avgt    5   959.285 ±  81.819  ms/op
+JMHPlayV2.vector512   avgt    5  1270.924 ±  87.270  ms/op

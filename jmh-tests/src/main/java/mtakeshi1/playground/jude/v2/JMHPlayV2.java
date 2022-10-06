@@ -45,7 +45,7 @@ public class JMHPlayV2 {
         blackhole.consume(NonStreamingPlay.evaluateStatistics(dimension, sample, boost, IntegrableFunction.standardFunction));
     }
 
-    @Benchmark
+    //    @Benchmark
     public void vector512(Blackhole blackhole) {
         VectorTry3.species = DoubleVector.SPECIES_512;
         blackhole.consume(VectorTry3.evaluateStatistics(dimension, sample, boost, IntegrableFunction.standardFunction));
@@ -57,11 +57,22 @@ public class JMHPlayV2 {
         blackhole.consume(VectorTry3.evaluateStatistics(dimension, sample, boost, IntegrableFunction.standardFunction));
     }
 
-    @Benchmark
+    //    @Benchmark
     public void vector128(Blackhole blackhole) {
         VectorTry3.species = DoubleVector.SPECIES_128;
         blackhole.consume(VectorTry3.evaluateStatistics(dimension, sample, boost, IntegrableFunction.standardFunction));
     }
+
+    @Benchmark
+    public void vectorAll256(Blackhole blackhole) {
+        VectorTry4.setSpecies(DoubleVector.SPECIES_256);
+        blackhole.consume(VectorTry4.evaluateStatistics(dimension, sample, boost, IntegrableFunction.standardFunction));
+    }
+
+//    @Benchmark
+//    public void vectorJude(Blackhole blackhole) {
+//        blackhole.consume(MonteCarlo.evaluateStatistics(dimension, sample, boost, IntegrableFunction.standardFunction));
+//    }
 
     public static void main(String[] args) throws Throwable {
         Options opt = new OptionsBuilder()
