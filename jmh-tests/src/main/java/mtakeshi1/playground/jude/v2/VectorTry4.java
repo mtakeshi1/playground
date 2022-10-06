@@ -109,7 +109,7 @@ public class VectorTry4 {
             double nextAvg = avg + (partialIntegral - avg) / (++k);
             sqSum += (partialIntegral - avg) * (partialIntegral - nextAvg);
             avg = nextAvg;
-            System.out.printf("%d - %g - %g%n", i, partialIntegral,  avg);
+            System.out.printf("[%d] - k: %s, partial: %s, avg: %s%n", i, k, partialIntegral, avg);
         }
 
         double variance = sqSum / (shifts.size() - 1);
@@ -125,7 +125,7 @@ public class VectorTry4 {
     public static void main(String[] args) {
         long tic = System.currentTimeMillis();
         int dimension = 3;
-        int sampleSize = 1 << 3;
+        int sampleSize = 1 << 5;
         int boost = 1 << 19;
 
         IntegrableFunction f = $ -> {

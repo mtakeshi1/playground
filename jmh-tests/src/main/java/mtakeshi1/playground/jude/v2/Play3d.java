@@ -1,7 +1,6 @@
 package mtakeshi1.playground.jude.v2;
 
 import mtakeshi1.playground.jude.IntegrableFunction;
-import mtakeshi1.playground.jude.P3;
 import mtakeshi1.playground.jude.Statistics;
 
 import java.util.Arrays;
@@ -13,9 +12,9 @@ import java.util.stream.Stream;
 import static java.lang.Math.*;
 import static java.util.Collections.unmodifiableList;
 
-public class NonStreamingPlay {
+public class Play3d {
 
-    static P3 evaluateIterationVector(int dim) {
+    static double[] evaluateIterationVector(int dim) {
         double phi;
         double prev = 0;
         double cur = 1;
@@ -28,23 +27,25 @@ public class NonStreamingPlay {
         for (int i = 0; i < vec.length; i++) {
             vec[i] = pow(1 / phi, i + 1);
         }
-        return new P3(vec);
+        return vec;
     }
 
-    static double evaluateIntegral(P3 shiftVec, P3 iterVec, int boost, IntegrableFunction f) {
-//        double[] point = new double[shiftVec.length];
+    static double evaluateIntegral(double[] shiftVec, double[] iterVec, int boost, IntegrableFunction f) {
+        double[] point = new double[shiftVec.length];
 
         double integral = 0;
         for (int k = 1; k < boost; k++) {
-            var point = shiftVec.plus(iterVec.times(k)).mod1();
-            double evaluation = f.evaluate(point.x(), point.y(), point.z());
+            for (int j = 0; j < point.length; j++){
+                point[j] = (shiftVec[j] + k * iterVec[j]) % 1.0;
+            }
+            double evaluation = f.evaluate(point);
             integral += (evaluation - integral) / k;
         }
         return integral;
     }
 
     static Statistics evaluateStatistics(int dim, List<double[]> shifts, int boost, IntegrableFunction f) {
-        P3 iterVec = evaluateIterationVector(dim);
+        double[] iterVec = evaluateIterationVector(dim);
 
         double avg = 0;
         double sqSum = 0;
@@ -52,7 +53,7 @@ public class NonStreamingPlay {
         {
             int k = 0;
             for (var shift : shifts) {
-                double integral = evaluateIntegral(new P3(shift), iterVec, boost, f);
+                double integral = evaluateIntegral(shift, iterVec, boost, f);
                 double nextAvg = avg + (integral - avg) / (++k);
                 sqSum += (integral - avg) * (integral - nextAvg);
                 avg = nextAvg;

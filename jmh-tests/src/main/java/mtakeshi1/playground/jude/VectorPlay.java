@@ -16,8 +16,7 @@ import static java.util.Collections.unmodifiableList;
 
 public class VectorPlay {
 
-    record P3(double x, double y, double z) {}
-//
+    //
 //    public static Statistics evaluateStatisticsR(double[][] shiftVecVec, int boost, IntegrableFunction f, double[] iterVec, int k, double avg, double sqSum) {
 //        if (list == null) {
 //            double variance = sqSum / (k - 1);

@@ -81,7 +81,7 @@ public class VectorTry5 {
         }
         var avg = zeroes;
         var sqSum =zeroes;
-        int k = 0;
+        var k = VectorHelper.allocateKVector(species, 1);
         for (int i = 0; i < sampleX.length; i += getSpecies().length()) {
             DoubleVector shiftsX = DoubleVector.fromArray(getSpecies(), sampleX, i);
             DoubleVector shiftsY = DoubleVector.fromArray(getSpecies(), sampleY, i);
@@ -109,10 +109,11 @@ public class VectorTry5 {
 //                }
                 kVector = kVector.add(1);
             }
-            var nextAvg = avg.add(partialIntegral.sub(avg).div(++k));
+            var nextAvg = avg.add(partialIntegral.sub(avg).div(k));
             sqSum = sqSum.add(partialIntegral.sub(avg).mul(partialIntegral.sub(nextAvg)));
             avg = nextAvg;
-            System.out.printf("%d - %g - %g%n", i, partialIntegral.lane(0), avg.lane(0));
+            System.out.printf("[%d] - k: %s, partial: %s, avg: %s%n", i, k, partialIntegral, avg);
+            k = k.add(species.length());
 //            double nextAvg = avg + (partialIntegral - avg) / (++k);
 //            sqSum += (partialIntegral - avg) * (partialIntegral - nextAvg);
 //            avg = nextAvg;
@@ -155,7 +156,7 @@ public class VectorTry5 {
                     .limit(sampleSize)
                     .toList());
         }
-        setSpecies(DoubleVector.SPECIES_256);
+        setSpecies(DoubleVector.SPECIES_128);
 
         var statistics = evaluateStatistics(dimension, sample, boost, f);
 

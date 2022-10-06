@@ -45,7 +45,7 @@ public class JMHPlayV2 {
         blackhole.consume(NonStreamingPlay.evaluateStatistics(dimension, sample, boost, IntegrableFunction.standardFunction));
     }
 
-    //    @Benchmark
+    @Benchmark
     public void vector512(Blackhole blackhole) {
         VectorTry3.species = DoubleVector.SPECIES_512;
         blackhole.consume(VectorTry3.evaluateStatistics(dimension, sample, boost, IntegrableFunction.standardFunction));
@@ -57,7 +57,7 @@ public class JMHPlayV2 {
         blackhole.consume(VectorTry3.evaluateStatistics(dimension, sample, boost, IntegrableFunction.standardFunction));
     }
 
-    //    @Benchmark
+    @Benchmark
     public void vector128(Blackhole blackhole) {
         VectorTry3.species = DoubleVector.SPECIES_128;
         blackhole.consume(VectorTry3.evaluateStatistics(dimension, sample, boost, IntegrableFunction.standardFunction));

@@ -17,28 +17,6 @@ import static mtakeshi1.playground.jude.VectorHelper.mod1;
 
 public class OptimzedVector {
 
-    record P3(double x, double y, double z) {
-        public P3() {
-            this(0, 0, 0);
-        }
-
-        public P3(double[] v) {
-            this(v[0], v[1], v[2]);
-        }
-
-        public P3 times(double scalar) {
-            return new P3(x * scalar, y * scalar, z * scalar);
-        }
-
-        public P3 plus(P3 other) {
-            return new P3(this.x + other.x, this.y + other.y, this.z + other.z);
-        }
-
-        public P3 mod1() {
-            return new P3(x % 1.0, y % 1.0, z % 1.0);
-        }
-    }
-
     public static double evaluateIntegral(double[] shiftVec, double[] iterVec, int boost, IntegrableFunction f) {
         return evaluateIntegral(new P3(shiftVec), new P3(iterVec), boost, f);
     }
@@ -135,9 +113,9 @@ public class OptimzedVector {
 
     public static double integralStep(int boost, IntegrableFunction f, P3 iterVec, DoubleVector count, DoubleVector shiftsX, DoubleVector shiftsY, DoubleVector shiftsZ, double partialIntegral) {
 //        DoubleVector count = DoubleVector.fromArray(species, countArray, countIndex);
-        var xp = mod1(count.lanewise(VectorOperators.FMA, iterVec.x, shiftsX)).toArray();
-        var yp = mod1(count.lanewise(VectorOperators.FMA, iterVec.y, shiftsY)).toArray();
-        var zp = mod1(count.lanewise(VectorOperators.FMA, iterVec.z, shiftsZ)).toArray();
+        var xp = mod1(count.lanewise(VectorOperators.FMA, iterVec.x(), shiftsX)).toArray();
+        var yp = mod1(count.lanewise(VectorOperators.FMA, iterVec.y(), shiftsY)).toArray();
+        var zp = mod1(count.lanewise(VectorOperators.FMA, iterVec.z(), shiftsZ)).toArray();
         var ca = count.toArray();
         for (int j = 0; j < xp.length; j++) {
             double evaluation = f.evaluate(xp[j], yp[j], zp[j]);
