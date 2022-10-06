@@ -2,6 +2,7 @@ package mtakeshi1.playground.jude;
 
 import jdk.incubator.vector.DoubleVector;
 import jdk.incubator.vector.VectorOperators;
+import jdk.incubator.vector.VectorSpecies;
 
 import java.util.Arrays;
 import java.util.List;
@@ -12,12 +13,17 @@ import java.util.stream.Stream;
 
 import static java.lang.Math.*;
 import static java.util.Collections.unmodifiableList;
+import static mtakeshi1.playground.jude.VectorHelper.mod1;
 
 public class OptimzedVector {
 
     record P3(double x, double y, double z) {
         public P3() {
             this(0, 0, 0);
+        }
+
+        public P3(double[] v) {
+            this(v[0], v[1], v[2]);
         }
 
         public P3 times(double scalar) {
@@ -33,13 +39,22 @@ public class OptimzedVector {
         }
     }
 
-    static double evaluateIntegral(P3 shiftVec, P3 iterVec, int boost, IntegrableFunction f) {
+    public static double evaluateIntegral(double[] shiftVec, double[] iterVec, int boost, IntegrableFunction f) {
+        return evaluateIntegral(new P3(shiftVec), new P3(iterVec), boost, f);
+    }
+
+    public static double evaluateIntegral(P3 shiftVec, P3 iterVec, int boost, IntegrableFunction f) {
         double integral = 0;
-        for (int count = boost; count >= 0; count--) {
-            P3 point = shiftVec.plus(iterVec.times(count)).mod1();
-            double evaluation = f.evaluate(point.x(), point.y(), point.z());
-            integral = integral + (evaluation - integral) / (boost - count + 1);
+        for (int count = boost; count > 0; count--) {
+            integral = partialIntegral(shiftVec, iterVec, boost, f, integral, count);
         }
+        return integral;
+    }
+
+    public static double partialIntegral(P3 shiftVec, P3 iterVec, int boost, IntegrableFunction f, double integral, int count) {
+        P3 point = shiftVec.plus(iterVec.times(count)).mod1();
+        double evaluation = f.evaluate(point.x(), point.y(), point.z());
+        integral = integral + (evaluation - integral) / (boost - count + 1);
         return integral;
     }
 
@@ -54,10 +69,6 @@ public class OptimzedVector {
             z[i] = list.get(i)[2];
         }
         return evaluateStatisticsR(x, y, z, boost, f, new P3(iterVec[0], iterVec[1], iterVec[2]));
-    }
-
-    public static DoubleVector mod1(DoubleVector vector) {
-        return vector.sub(vector.convert(VectorOperators.D2L, 0).convert(VectorOperators.L2D, 0));
     }
 
     private static double evaluateIntegralVectorOld(int boost, IntegrableFunction f, DoubleVector shiftsVector, DoubleVector iterVector) {
@@ -92,21 +103,7 @@ public class OptimzedVector {
             DoubleVector shiftsY = DoubleVector.fromArray(species, sampleY, i);
             DoubleVector shiftsZ = DoubleVector.fromArray(species, sampleZ, i);
 
-            double partialIntegral = 0;
-            for (int countIndex = 0; countIndex < boost; countIndex++) {
-                DoubleVector count = DoubleVector.fromArray(species, countArray, countIndex);
-                var xp = mod1(count.lanewise(VectorOperators.FMA, iterVec.x, shiftsX)).toArray();
-                var yp = mod1(count.lanewise(VectorOperators.FMA, iterVec.y, shiftsY)).toArray();
-                var zp = mod1(count.lanewise(VectorOperators.FMA, iterVec.z, shiftsZ)).toArray();
-                var ca = count.toArray();
-                for (int j = 0; j < xp.length; j++) {
-                    double evaluation = f.evaluate(xp[j], yp[j], zp[j]);
-                    partialIntegral = partialIntegral + (evaluation - partialIntegral) / (boost - ca[j] + 1);
-                }
-                if (i == 6) {
-                    System.out.printf("%s %s %s %s - %.10g%n", Arrays.toString(xp), Arrays.toString(yp), Arrays.toString(zp), Arrays.toString(ca), partialIntegral);
-                }
-            }
+            double partialIntegral = evaluateIntegral(boost, f, iterVec, species, shiftsX, shiftsY, shiftsZ);
 //            System.out.printf("[%s %s %s] - integrale: %.8g%n", shiftsX, shiftsY, shiftsZ, partialIntegral);
             double nextAvg = avg + (partialIntegral - avg) / k;
             sqSum = sqSum + (partialIntegral - avg) * (partialIntegral - nextAvg);
@@ -120,6 +117,36 @@ public class OptimzedVector {
                 new double[]{avg - 2.1 * stdDeviation, avg + 2.1 * stdDeviation}
         );
 
+    }
+
+    public static double evaluateIntegral(int boost, IntegrableFunction f, P3 iterVec, VectorSpecies<Double> species, DoubleVector shiftsX, DoubleVector shiftsY, DoubleVector shiftsZ) {
+        double partialIntegral = 0;
+        double[] countArray = new double[species.length()];
+        for(int i = 0; i < species.length(); i++) {
+            countArray[i] = boost - i;
+        }
+        DoubleVector count = DoubleVector.fromArray(species, countArray, 0);
+        for (int countIndex = 0; countIndex < boost; countIndex++) {
+            partialIntegral = integralStep(boost, f, iterVec, count, shiftsX, shiftsY, shiftsZ, partialIntegral);
+            count = count.sub(1);
+        }
+        return partialIntegral;
+    }
+
+    public static double integralStep(int boost, IntegrableFunction f, P3 iterVec, DoubleVector count, DoubleVector shiftsX, DoubleVector shiftsY, DoubleVector shiftsZ, double partialIntegral) {
+//        DoubleVector count = DoubleVector.fromArray(species, countArray, countIndex);
+        var xp = mod1(count.lanewise(VectorOperators.FMA, iterVec.x, shiftsX)).toArray();
+        var yp = mod1(count.lanewise(VectorOperators.FMA, iterVec.y, shiftsY)).toArray();
+        var zp = mod1(count.lanewise(VectorOperators.FMA, iterVec.z, shiftsZ)).toArray();
+        var ca = count.toArray();
+        for (int j = 0; j < xp.length; j++) {
+            double evaluation = f.evaluate(xp[j], yp[j], zp[j]);
+            partialIntegral = partialIntegral + (evaluation - partialIntegral) / (boost - ca[j] + 1);
+//                    if (i == 6 && countIndex % (16*1024) == 0) {
+//                        System.out.printf("%s %s %s %s - %.10g%n", Arrays.toString(xp), Arrays.toString(yp), Arrays.toString(zp), Arrays.toString(ca), partialIntegral);
+//                    }
+        }
+        return partialIntegral;
     }
 
     static double evaluateIntegral(double[] shiftVec, DoubleVector iterVector, int boost, IntegrableFunction f) {
@@ -164,7 +191,7 @@ public class OptimzedVector {
 
     public static void main(String[] args) {
         int dimension = 3;
-        int sampleSize = 1 << 3;
+        int sampleSize = 1 << 5;
         int boost = 1 << 19;
 
         IntegrableFunction f = $ -> {
