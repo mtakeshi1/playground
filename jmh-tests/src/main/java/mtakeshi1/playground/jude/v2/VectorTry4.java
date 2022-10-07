@@ -49,8 +49,8 @@ public class VectorTry4 {
     private static DoubleVector zeroes = DoubleVector.broadcast(getSpecies(), 0.0);
 
 
-    public static DoubleVector f(DoubleVector x, DoubleVector y, DoubleVector z, VectorMask<Double> initialMask) {
-        VectorMask<Double> notZero = x.mul(y, initialMask).mul(z, initialMask).compare(VectorOperators.NE, 0.0);
+    public static DoubleVector f(DoubleVector x, DoubleVector y, DoubleVector z) {
+        VectorMask<Double> notZero = x.mul(y).mul(z).compare(VectorOperators.NE, 0.0);
         DoubleVector oneOverY = ones.div(y, notZero);
         DoubleVector oneOverXZ = ones.div(x.add(z, notZero), notZero);
         DoubleVector vector = oneOverY.lanewise(VectorOperators.SIN, notZero).add(oneOverXZ.lanewise(VectorOperators.POW, third, notZero));
@@ -67,14 +67,6 @@ public class VectorTry4 {
         double[] sampleX = new double[shifts.size()];
         double[] sampleY = new double[shifts.size()];
         double[] sampleZ = new double[shifts.size()];
-//
-//        IntegrableFunction standardFunction = $ -> {
-//            double x = $[0];
-//            double y = $[1];
-//            double z = $[2];
-//
-//            return x*y*z == 0 ? 0 : sin(1/y) + pow(1/(x+z), 1D/3);
-//        };
 
         for (int i = 0; i < sampleX.length; i++) {
             double[] shift = shifts.get(i);
@@ -82,34 +74,31 @@ public class VectorTry4 {
             sampleY[i] = shift[1];
             sampleZ[i] = shift[2];
         }
-        for (int i = 0; i < sampleX.length; i += getSpecies().length()) {
-            DoubleVector shiftsX = DoubleVector.fromArray(getSpecies(), sampleX, i);
-            DoubleVector shiftsY = DoubleVector.fromArray(getSpecies(), sampleY, i);
-            DoubleVector shiftsZ = DoubleVector.fromArray(getSpecies(), sampleZ, i);
+        DoubleVector iterX = DoubleVector.broadcast(species, iterVec[0]);
+        DoubleVector iterY = DoubleVector.broadcast(species, iterVec[1]);
+        DoubleVector iterZ = DoubleVector.broadcast(species, iterVec[2]);
+        DoubleVector initialKVector = DoubleVector.broadcast(species, 1);
+        for (int i = 0; i < sampleX.length; i += species.length()) {
+            DoubleVector shiftsX = DoubleVector.fromArray(species, sampleX, i);
+            DoubleVector shiftsY = DoubleVector.fromArray(species, sampleY, i);
+            DoubleVector shiftsZ = DoubleVector.fromArray(species, sampleZ, i);
 
             double partialIntegral = 0;
-            DoubleVector kVector = VectorHelper.allocateKVector(getSpecies(), 1);
+            DoubleVector kVector = initialKVector;
             int k1;
             for (k1 = 1; k1 < boost; k1++) {
-                var xp = mod1(kVector.lanewise(VectorOperators.FMA, iterVec[0], shiftsX));
-                var yp = mod1(kVector.lanewise(VectorOperators.FMA, iterVec[1], shiftsY));
-                var zp = mod1(kVector.lanewise(VectorOperators.FMA, iterVec[2], shiftsZ));
-                var initialMask = kVector.compare(VectorOperators.LT, boost);
-                var multi = f(xp, yp, zp, initialMask).toArray();
-                var countVec = kVector.toArray();
-                for (int j = 0; j < getSpecies().length(); j++) {
-                    if (countVec[j] >= boost) {
-                        break;
-                    }
-                    double evaluation = multi[j];
-                    partialIntegral += (evaluation - partialIntegral) / k1;
+                var xp = mod1(kVector.lanewise(VectorOperators.FMA, iterX, shiftsX));
+                var yp = mod1(kVector.lanewise(VectorOperators.FMA, iterY, shiftsY));
+                var zp = mod1(kVector.lanewise(VectorOperators.FMA, iterZ, shiftsZ));
+                var evaluation = f(xp, yp, zp).toArray();
+                for (int j = 0; j < species.length(); j++) {
+                    partialIntegral += (evaluation[j] - partialIntegral) / k1;
                 }
                 kVector = kVector.add(1);
             }
             double nextAvg = avg + (partialIntegral - avg) / (++k);
             sqSum += (partialIntegral - avg) * (partialIntegral - nextAvg);
             avg = nextAvg;
-            System.out.printf("[%d] - k: %s, partial: %s, avg: %s%n", i, k, partialIntegral, avg);
         }
 
         double variance = sqSum / (shifts.size() - 1);
@@ -120,7 +109,6 @@ public class VectorTry4 {
                 new double[]{avg - 2.1 * stdDeviation, avg + 2.1 * stdDeviation}
         );
     }
-
 
     public static void main(String[] args) {
         long tic = System.currentTimeMillis();

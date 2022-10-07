@@ -52,28 +52,27 @@ public class VectorTry3 {
             sampleY[i] = shift[1];
             sampleZ[i] = shift[2];
         }
+        DoubleVector iterX = DoubleVector.broadcast(species, iterVec[0]);
+        DoubleVector iterY = DoubleVector.broadcast(species, iterVec[1]);
+        DoubleVector iterZ = DoubleVector.broadcast(species, iterVec[2]);
+        DoubleVector initialKVector = DoubleVector.broadcast(species, 1);
         for (int i = 0; i < sampleX.length; i += species.length()) {
             DoubleVector shiftsX = DoubleVector.fromArray(species, sampleX, i);
             DoubleVector shiftsY = DoubleVector.fromArray(species, sampleY, i);
             DoubleVector shiftsZ = DoubleVector.fromArray(species, sampleZ, i);
 
             double partialIntegral = 0;
-            DoubleVector kVector = VectorHelper.allocateKVector(species, 1);
+            DoubleVector kVector = initialKVector;
             int k1;
-//            for (k1 = 1; k1 < (boost - (species.length() - 1)); k1++) {
             for (k1 = 1; k1 < boost; k1++) {
-                var xp = mod1(kVector.lanewise(VectorOperators.FMA, iterVec[0], shiftsX)).toArray();
-                var yp = mod1(kVector.lanewise(VectorOperators.FMA, iterVec[1], shiftsY)).toArray();
-                var zp = mod1(kVector.lanewise(VectorOperators.FMA, iterVec[2], shiftsZ)).toArray();
-                double[] countVec = kVector.toArray();
+                var xp = mod1(kVector.lanewise(VectorOperators.FMA, iterX, shiftsX)).toArray();
+                var yp = mod1(kVector.lanewise(VectorOperators.FMA, iterY, shiftsY)).toArray();
+                var zp = mod1(kVector.lanewise(VectorOperators.FMA, iterZ, shiftsZ)).toArray();
                 for (int j = 0; j < species.length(); j++) {
-                    if (countVec[j] >= boost) {
-                        break;
-                    }
                     double evaluation = f.evaluate(xp[j], yp[j], zp[j]);
                     partialIntegral += (evaluation - partialIntegral) / k1;
-                    kVector = kVector.add(1);
                 }
+                kVector = kVector.add(1);
             }
             double nextAvg = avg + (partialIntegral - avg) / (++k);
             sqSum += (partialIntegral - avg) * (partialIntegral - nextAvg);
@@ -125,6 +124,10 @@ public class VectorTry3 {
         Confident Interval 95%: [1.5610645497107127, 1.561654299569972]
 
         Elapsed Time: 1034,901055
+        Avg: 1,561359
+Variance: 0,000000
+Confident Interval 95%: [1.5610645497107127, 1.561654299569972]
+
          */
         System.out.printf("""
                         Avg: %f

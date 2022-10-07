@@ -96,6 +96,9 @@ public class NonStreamingPlay {
         }
 
         var statistics = evaluateStatistics(dimension, sample, boost, f);
+//Avg: 1,561359
+//Variance: 0,000000
+//Confident Interval 95%: [1.5610645497107127, 1.561654299569972]
 
         System.out.printf("""
                         Avg: %f
