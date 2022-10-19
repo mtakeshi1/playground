@@ -1,0 +1,12 @@
+-XX:+UnlockDiagnosticVMOptions -XX:+PrintAssembly
+
+
+https://wiki.openjdk.org/display/HotSpot/PrintAssembly
+
+
+https://gist.github.com/rednaxelafx/1165804#file-notes-md
+
+
+https://jpbempel.github.io/2016/03/16/compilecommand-jvm-option.html
+
+
