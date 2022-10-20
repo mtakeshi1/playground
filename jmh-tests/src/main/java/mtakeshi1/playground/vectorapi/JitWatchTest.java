@@ -9,7 +9,6 @@ import java.util.Random;
 public class JitWatchTest {
 
     private DoubleVector innerLoop(DoubleVector l, DoubleVector r, DoubleVector acc) {
-//        return l.mul(r).add(acc);
         return l.fma(r, acc);
     }
 
