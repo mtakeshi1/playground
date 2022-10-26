@@ -1,0 +1,222 @@
+============================= C2-compiled nmethod ==============================
+----------------------------------- Assembly -----------------------------------
+
+Compiled method (c2)    1270  488       4       mtakeshi1.playground.vectorapi.JitWatchTest::fmaVector (117 bytes)
+ total in heap  [0x00007fed2087e710,0x00007fed2087ee18] = 1800
+ relocation     [0x00007fed2087e870,0x00007fed2087e888] = 24
+ main code      [0x00007fed2087e8a0,0x00007fed2087ebe0] = 832
+ stub code      [0x00007fed2087ebe0,0x00007fed2087ebf8] = 24
+ oops           [0x00007fed2087ebf8,0x00007fed2087ec10] = 24
+ metadata       [0x00007fed2087ec10,0x00007fed2087ec78] = 104
+ scopes data    [0x00007fed2087ec78,0x00007fed2087ed60] = 232
+ scopes pcs     [0x00007fed2087ed60,0x00007fed2087ede0] = 128
+ dependencies   [0x00007fed2087ede0,0x00007fed2087ee00] = 32
+ nul chk table  [0x00007fed2087ee00,0x00007fed2087ee18] = 24
+
+[Disassembly]
+--------------------------------------------------------------------------------
+[Constant Pool (empty)]
+
+--------------------------------------------------------------------------------
+
+[Entry Point]
+  # {method} {0x00007fecf0407750} 'fmaVector' '([D[D)D' in 'mtakeshi1/playground/vectorapi/JitWatchTest'
+  # this:     rsi:rsi   = 'mtakeshi1/playground/vectorapi/JitWatchTest'
+  # parm0:    rdx:rdx   = '[D'
+  # parm1:    rcx:rcx   = '[D'
+  #           [sp+0x60]  (sp of caller)
+  0x00007fed2087e8a0:   mov    0x8(%rsi),%r10d
+  0x00007fed2087e8a4:   movabs $0x800000000,%r11
+  0x00007fed2087e8ae:   add    %r11,%r10
+  0x00007fed2087e8b1:   cmp    %r10,%rax
+  0x00007fed2087e8b4:   jne    0x00007fed2031ac80           ;   {runtime_call ic_miss_stub}
+  0x00007fed2087e8ba:   xchg   %ax,%ax
+  0x00007fed2087e8bc:   nopl   0x0(%rax)
+[Verified Entry Point]
+  0x00007fed2087e8c0:   mov    %eax,-0x14000(%rsp)
+  0x00007fed2087e8c7:   push   %rbp
+  0x00007fed2087e8c8:   sub    $0x50,%rsp
+  0x00007fed2087e8cc:   mov    %rsi,%r10
+  0x00007fed2087e8cf:   mov    0xc(%rdx),%r9d               ; implicit exception: dispatches to 0x00007fed2087ebc8
+  0x00007fed2087e8d3:   mov    %r9d,%r11d
+  0x00007fed2087e8d6:   and    $0xfffffffc,%r11d
+  0x00007fed2087e8da:   vpxor  %ymm2,%ymm2,%ymm2
+  0x00007fed2087e8de:   test   %r11d,%r11d
+  0x00007fed2087e8e1:   jle    0x00007fed2087eba3
+  0x00007fed2087e8e7:   mov    %r9d,%r8d
+  0x00007fed2087e8ea:   add    $0xfffffffd,%r8d
+  0x00007fed2087e8ee:   test   %r8d,%r8d
+  0x00007fed2087e8f1:   jl     0x00007fed2087eb54
+  0x00007fed2087e8f7:   cmp    $0x3,%r9d
+  0x00007fed2087e8fb:   je     0x00007fed2087eb54
+  0x00007fed2087e901:   movslq %r9d,%r8
+  0x00007fed2087e904:   movslq %r11d,%r9
+  0x00007fed2087e907:   add    $0xfffffffffffffffd,%r8
+  0x00007fed2087e90b:   add    $0x3,%r9
+  0x00007fed2087e90f:   and    $0xfffffffffffffffc,%r9
+  0x00007fed2087e913:   mov    %r9d,%ebx
+  0x00007fed2087e916:   movslq %ebx,%r9
+  0x00007fed2087e919:   add    $0xfffffffffffffffc,%r9
+  0x00007fed2087e91d:   cmp    %r8,%r9
+  0x00007fed2087e920:   jae    0x00007fed2087eb54
+  0x00007fed2087e926:   mov    0xc(%rcx),%r8d               ; implicit exception: dispatches to 0x00007fed2087eb54
+  0x00007fed2087e92a:   mov    %r8d,%edi
+  0x00007fed2087e92d:   add    $0xfffffffd,%edi
+  0x00007fed2087e930:   test   %edi,%edi
+  0x00007fed2087e932:   jl     0x00007fed2087eb54
+  0x00007fed2087e938:   cmp    $0x3,%r8d
+  0x00007fed2087e93c:   je     0x00007fed2087eb54
+  0x00007fed2087e942:   movslq %r8d,%r8
+  0x00007fed2087e945:   add    $0xfffffffffffffffd,%r8
+  0x00007fed2087e949:   cmp    %r8,%r9
+  0x00007fed2087e94c:   jae    0x00007fed2087eb54
+  0x00007fed2087e952:   cmp    $0x7ffffffc,%r11d
+  0x00007fed2087e959:   jg     0x00007fed2087eb78
+  0x00007fed2087e95f:   vmovdqu 0x10(%rcx),%ymm0
+  0x00007fed2087e964:   vmovdqu 0x10(%rdx),%ymm1
+  0x00007fed2087e969:   vfmadd231pd %ymm0,%ymm1,%ymm2
+  0x00007fed2087e96e:   mov    %r11d,%r9d
+  0x00007fed2087e971:   add    $0xffffffc4,%r9d
+  0x00007fed2087e975:   mov    $0x4,%r8d
+  0x00007fed2087e97b:   mov    $0x80000000,%ebx
+  0x00007fed2087e980:   cmp    %r9d,%r11d
+  0x00007fed2087e983:   cmovl  %ebx,%r9d
+  0x00007fed2087e987:   cmp    $0x4,%r9d
+  0x00007fed2087e98b:   jle    0x00007fed2087eb0a
+  0x00007fed2087e991:   mov    $0xfa00,%ebx
+  0x00007fed2087e996:   xor    %esi,%esi
+  0x00007fed2087e998:   jmp    0x00007fed2087e9ac
+  0x00007fed2087e99a:   mov    0x380(%r15),%rdi             ; ImmutableOopMap {r10=Oop rcx=Oop rdx=Oop }
+                                                            ;*goto {reexecute=1 rethrow=0 return_oop=0}
+                                                            ; - (reexecute) mtakeshi1.playground.vectorapi.JitWatchTest::fmaVector@71 (line 20)
+  0x00007fed2087e9a1:   test   %eax,(%rdi)                  ;   {poll}
+  0x00007fed2087e9a3:   cmp    %r9d,%r8d
+  0x00007fed2087e9a6:   jge    0x00007fed2087eb0a
+  0x00007fed2087e9ac:   mov    %r9d,%edi
+  0x00007fed2087e9af:   sub    %r8d,%edi
+  0x00007fed2087e9b2:   cmp    %r8d,%r9d
+  0x00007fed2087e9b5:   cmovl  %esi,%edi
+  0x00007fed2087e9b8:   cmp    $0xfa00,%edi
+  0x00007fed2087e9be:   cmova  %ebx,%edi
+  0x00007fed2087e9c1:   add    %r8d,%edi
+  0x00007fed2087e9c4:   nopw   0x0(%rax,%rax,1)
+  0x00007fed2087e9ca:   nopw   0x0(%rax,%rax,1)
+  0x00007fed2087e9d0:   vmovdqu 0x1f0(%rdx,%r8,8),%ymm1
+  0x00007fed2087e9da:   vmovdqu 0x1d0(%rdx,%r8,8),%ymm3
+  0x00007fed2087e9e4:   vmovdqu 0x10(%rdx,%r8,8),%ymm0
+  0x00007fed2087e9eb:   vfmadd231pd 0x10(%rcx,%r8,8),%ymm0,%ymm2
+  0x00007fed2087e9f2:   vmovdqu 0x30(%rdx,%r8,8),%ymm0
+  0x00007fed2087e9f9:   vfmadd231pd 0x30(%rcx,%r8,8),%ymm0,%ymm2
+  0x00007fed2087ea00:   vmovdqu 0x50(%rdx,%r8,8),%ymm0
+  0x00007fed2087ea07:   vfmadd231pd 0x50(%rcx,%r8,8),%ymm0,%ymm2
+  0x00007fed2087ea0e:   vmovdqu 0x70(%rdx,%r8,8),%ymm0
+  0x00007fed2087ea15:   vfmadd231pd 0x70(%rcx,%r8,8),%ymm0,%ymm2
+  0x00007fed2087ea1c:   vmovdqu 0x90(%rdx,%r8,8),%ymm0
+  0x00007fed2087ea26:   vfmadd231pd 0x90(%rcx,%r8,8),%ymm0,%ymm2
+  0x00007fed2087ea30:   vmovdqu 0xb0(%rdx,%r8,8),%ymm0
+  0x00007fed2087ea3a:   vfmadd231pd 0xb0(%rcx,%r8,8),%ymm0,%ymm2
+  0x00007fed2087ea44:   vmovdqu 0xd0(%rdx,%r8,8),%ymm0
+  0x00007fed2087ea4e:   vfmadd231pd 0xd0(%rcx,%r8,8),%ymm0,%ymm2
+  0x00007fed2087ea58:   vmovdqu 0xf0(%rdx,%r8,8),%ymm0
+  0x00007fed2087ea62:   vfmadd231pd 0xf0(%rcx,%r8,8),%ymm0,%ymm2
+  0x00007fed2087ea6c:   vmovdqu 0x110(%rdx,%r8,8),%ymm0
+  0x00007fed2087ea76:   vfmadd231pd 0x110(%rcx,%r8,8),%ymm0,%ymm2
+  0x00007fed2087ea80:   vmovdqu 0x130(%rdx,%r8,8),%ymm0
+  0x00007fed2087ea8a:   vfmadd231pd 0x130(%rcx,%r8,8),%ymm0,%ymm2
+  0x00007fed2087ea94:   vmovdqu 0x150(%rdx,%r8,8),%ymm0
+  0x00007fed2087ea9e:   vfmadd231pd 0x150(%rcx,%r8,8),%ymm0,%ymm2
+  0x00007fed2087eaa8:   vmovdqu 0x170(%rdx,%r8,8),%ymm0
+  0x00007fed2087eab2:   vfmadd231pd 0x170(%rcx,%r8,8),%ymm0,%ymm2
+  0x00007fed2087eabc:   vmovdqu 0x190(%rdx,%r8,8),%ymm0
+  0x00007fed2087eac6:   vfmadd231pd 0x190(%rcx,%r8,8),%ymm0,%ymm2
+  0x00007fed2087ead0:   vmovdqu 0x1b0(%rdx,%r8,8),%ymm0
+  0x00007fed2087eada:   vfmadd231pd 0x1b0(%rcx,%r8,8),%ymm0,%ymm2
+  0x00007fed2087eae4:   vfmadd231pd 0x1d0(%rcx,%r8,8),%ymm3,%ymm2
+  0x00007fed2087eaee:   vfmadd231pd 0x1f0(%rcx,%r8,8),%ymm1,%ymm2
+  0x00007fed2087eaf8:   add    $0x40,%r8d
+  0x00007fed2087eafc:   cmp    %edi,%r8d
+  0x00007fed2087eaff:   jl     0x00007fed2087e9d0
+  0x00007fed2087eb05:   jmp    0x00007fed2087e99a
+  0x00007fed2087eb0a:   cmp    %r11d,%r8d
+  0x00007fed2087eb0d:   jge    0x00007fed2087eb9c
+  0x00007fed2087eb13:   nop
+  0x00007fed2087eb14:   vmovdqu 0x10(%rdx,%r8,8),%ymm0
+  0x00007fed2087eb1b:   vfmadd231pd 0x10(%rcx,%r8,8),%ymm0,%ymm2
+  0x00007fed2087eb22:   add    $0x4,%r8d
+  0x00007fed2087eb26:   cmp    %r11d,%r8d
+  0x00007fed2087eb29:   jl     0x00007fed2087eb14
+  0x00007fed2087eb2b:   vmovdqu %ymm2,(%rsp)
+  0x00007fed2087eb30:   mov    $0xffffff45,%esi
+  0x00007fed2087eb35:   mov    %r10,%rbp
+  0x00007fed2087eb38:   mov    %rdx,0x20(%rsp)
+  0x00007fed2087eb3d:   mov    %rcx,0x28(%rsp)
+  0x00007fed2087eb42:   mov    %r8d,0x38(%rsp)
+  0x00007fed2087eb47:   mov    %r11d,0x3c(%rsp)
+  0x00007fed2087eb4c:   vzeroupper
+  0x00007fed2087eb4f:   call   0x00007fed20320200           ; ImmutableOopMap {rbp=Oop [32]=Oop [40]=Oop }
+                                                            ;*if_icmpge {reexecute=1 rethrow=0 return_oop=0}
+                                                            ; - (reexecute) mtakeshi1.playground.vectorapi.JitWatchTest::fmaVector@27 (line 20)
+                                                            ;   {runtime_call UncommonTrapBlob}
+  0x00007fed2087eb54:   mov    $0xffffff76,%esi
+  0x00007fed2087eb59:   mov    %r10,%rbp
+  0x00007fed2087eb5c:   mov    %rdx,(%rsp)
+  0x00007fed2087eb60:   mov    %rcx,0x8(%rsp)
+  0x00007fed2087eb65:   mov    %r11d,0x14(%rsp)
+  0x00007fed2087eb6a:   vmovdqu %ymm2,0x20(%rsp)
+  0x00007fed2087eb70:   vzeroupper
+  0x00007fed2087eb73:   call   0x00007fed20320200           ; ImmutableOopMap {rbp=Oop [0]=Oop [8]=Oop }
+                                                            ;*if_icmpge {reexecute=1 rethrow=0 return_oop=0}
+                                                            ; - (reexecute) mtakeshi1.playground.vectorapi.JitWatchTest::fmaVector@27 (line 20)
+                                                            ;   {runtime_call UncommonTrapBlob}
+  0x00007fed2087eb78:   mov    $0xffffff6e,%esi
+  0x00007fed2087eb7d:   mov    %r10,%rbp
+  0x00007fed2087eb80:   mov    %rdx,(%rsp)
+  0x00007fed2087eb84:   mov    %rcx,0x8(%rsp)
+  0x00007fed2087eb89:   mov    %r11d,0x14(%rsp)
+  0x00007fed2087eb8e:   vmovdqu %ymm2,0x20(%rsp)
+  0x00007fed2087eb94:   vzeroupper
+  0x00007fed2087eb97:   call   0x00007fed20320200           ; ImmutableOopMap {rbp=Oop [0]=Oop [8]=Oop }
+                                                            ;*if_icmpge {reexecute=1 rethrow=0 return_oop=0}
+                                                            ; - (reexecute) mtakeshi1.playground.vectorapi.JitWatchTest::fmaVector@27 (line 20)
+                                                            ;   {runtime_call UncommonTrapBlob}
+  0x00007fed2087eb9c:   vmovdqu %ymm2,(%rsp)
+  0x00007fed2087eba1:   jmp    0x00007fed2087eb30
+  0x00007fed2087eba3:   mov    $0xffffff45,%esi
+  0x00007fed2087eba8:   mov    %r10,%rbp
+  0x00007fed2087ebab:   mov    %rdx,(%rsp)
+  0x00007fed2087ebaf:   mov    %rcx,0x8(%rsp)
+  0x00007fed2087ebb4:   mov    %r11d,0x14(%rsp)
+  0x00007fed2087ebb9:   vmovdqu %ymm2,0x20(%rsp)
+  0x00007fed2087ebbf:   nop
+  0x00007fed2087ebc0:   vzeroupper
+  0x00007fed2087ebc3:   call   0x00007fed20320200           ; ImmutableOopMap {rbp=Oop [0]=Oop [8]=Oop }
+                                                            ;*if_icmpge {reexecute=1 rethrow=0 return_oop=0}
+                                                            ; - (reexecute) mtakeshi1.playground.vectorapi.JitWatchTest::fmaVector@27 (line 20)
+                                                            ;   {runtime_call UncommonTrapBlob}
+  0x00007fed2087ebc8:   mov    $0xfffffff6,%esi
+  0x00007fed2087ebcd:   data16 xchg %ax,%ax
+  0x00007fed2087ebd0:   vzeroupper
+  0x00007fed2087ebd3:   call   0x00007fed20320200           ; ImmutableOopMap {}
+                                                            ;*arraylength {reexecute=0 rethrow=0 return_oop=0}
+                                                            ; - mtakeshi1.playground.vectorapi.JitWatchTest::fmaVector@9 (line 18)
+                                                            ;   {runtime_call UncommonTrapBlob}
+  0x00007fed2087ebd8:   hlt
+  0x00007fed2087ebd9:   hlt
+  0x00007fed2087ebda:   hlt
+  0x00007fed2087ebdb:   hlt
+  0x00007fed2087ebdc:   hlt
+  0x00007fed2087ebdd:   hlt
+  0x00007fed2087ebde:   hlt
+  0x00007fed2087ebdf:   hlt
+[Exception Handler]
+  0x00007fed2087ebe0:   jmp    0x00007fed203bfa80           ;   {no_reloc}
+[Deopt Handler Code]
+  0x00007fed2087ebe5:   call   0x00007fed2087ebea
+  0x00007fed2087ebea:   subq   $0x5,(%rsp)
+  0x00007fed2087ebef:   jmp    0x00007fed203205a0           ;   {runtime_call DeoptimizationBlob}
+  0x00007fed2087ebf4:   hlt
+  0x00007fed2087ebf5:   hlt
+  0x00007fed2087ebf6:   hlt
+  0x00007fed2087ebf7:   hlt
+--------------------------------------------------------------------------------
+[/Disassembly]

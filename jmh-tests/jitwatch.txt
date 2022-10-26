@@ -1,0 +1,1072 @@
+/opt/java/19-zulu/bin/java --add-modules jdk.incubator.vector -XX:+UnlockDiagnosticVMOptions -XX:CompileCommand=print,*JitWatchTest.innerLoop -XX:CompileCommand=print,*JitWatchTest.fmaVector -javaagent:/opt/idea-IC-212.5457.46/lib/idea_rt.jar=32823:/opt/idea-IC-212.5457.46/bin -Dfile.encoding=UTF-8 -classpath /home/takeshi/projects/github/playground/jmh-tests/target/classes:/home/takeshi/.m2/repository/org/openjdk/jmh/jmh-core/1.32/jmh-core-1.32.jar:/home/takeshi/.m2/repository/net/sf/jopt-simple/jopt-simple/4.6/jopt-simple-4.6.jar:/home/takeshi/.m2/repository/org/apache/commons/commons-math3/3.2/commons-math3-3.2.jar mtakeshi1.playground.vectorapi.JitWatchTest
+WARNING: Using incubator modules: jdk.incubator.vector
+CompileCommand: print *JitWatchTest.innerLoop bool print = true
+CompileCommand: print *JitWatchTest.fmaVector bool print = true
+
+============================= C1-compiled nmethod ==============================
+----------------------------------- Assembly -----------------------------------
+
+Compiled method (c1)    1223  456       3       mtakeshi1.playground.vectorapi.JitWatchTest::innerLoop (7 bytes)
+ total in heap  [0x00007fed18dfb990,0x00007fed18dfbe50] = 1216
+ relocation     [0x00007fed18dfbaf0,0x00007fed18dfbb38] = 72
+ main code      [0x00007fed18dfbb40,0x00007fed18dfbd40] = 512
+ stub code      [0x00007fed18dfbd40,0x00007fed18dfbd80] = 64
+ oops           [0x00007fed18dfbd80,0x00007fed18dfbd88] = 8
+ metadata       [0x00007fed18dfbd88,0x00007fed18dfbd98] = 16
+ scopes data    [0x00007fed18dfbd98,0x00007fed18dfbdd8] = 64
+ scopes pcs     [0x00007fed18dfbdd8,0x00007fed18dfbe38] = 96
+ dependencies   [0x00007fed18dfbe38,0x00007fed18dfbe40] = 8
+ nul chk table  [0x00007fed18dfbe40,0x00007fed18dfbe50] = 16
+
+[Disassembly]
+--------------------------------------------------------------------------------
+[Constant Pool (empty)]
+
+--------------------------------------------------------------------------------
+
+[Entry Point]
+  # {method} {0x00007fecf04075b8} 'innerLoop' '(Ljdk/incubator/vector/DoubleVector;Ljdk/incubator/vector/DoubleVector;Ljdk/incubator/vector/DoubleVector;)Ljdk/incubator/vector/DoubleVector;' in 'mtakeshi1/playground/vectorapi/JitWatchTest'
+  # this:     rsi:rsi   = 'mtakeshi1/playground/vectorapi/JitWatchTest'
+  # parm0:    rdx:rdx   = 'jdk/incubator/vector/DoubleVector'
+  # parm1:    rcx:rcx   = 'jdk/incubator/vector/DoubleVector'
+  # parm2:    r8:r8     = 'jdk/incubator/vector/DoubleVector'
+  #           [sp+0x60]  (sp of caller)
+  0x00007fed18dfbb40:   mov    0x8(%rsi),%r10d
+  0x00007fed18dfbb44:   movabs $0x800000000,%r11
+  0x00007fed18dfbb4e:   add    %r11,%r10
+  0x00007fed18dfbb51:   cmp    %rax,%r10
+  0x00007fed18dfbb54:   jne    0x00007fed2031ac80           ;   {runtime_call ic_miss_stub}
+  0x00007fed18dfbb5a:   nopw   0x0(%rax,%rax,1)
+[Verified Entry Point]
+  0x00007fed18dfbb60:   mov    %eax,-0x14000(%rsp)
+  0x00007fed18dfbb67:   push   %rbp
+  0x00007fed18dfbb68:   sub    $0x50,%rsp
+  0x00007fed18dfbb6c:   mov    %rdx,%rdi
+  0x00007fed18dfbb6f:   movabs $0x7fecf040a670,%rdx         ;   {metadata(method data for {method} {0x00007fecf04075b8} 'innerLoop' '(Ljdk/incubator/vector/DoubleVector;Ljdk/incubator/vector/DoubleVector;Ljdk/incubator/vector/DoubleVector;)Ljdk/incubator/vector/DoubleVector;' in 'mtakeshi1/playground/vectorapi/JitWatchTest')}
+  0x00007fed18dfbb79:   mov    0xf4(%rdx),%ebx
+  0x00007fed18dfbb7f:   add    $0x2,%ebx
+  0x00007fed18dfbb82:   mov    %ebx,0xf4(%rdx)
+  0x00007fed18dfbb88:   and    $0x7fe,%ebx
+  0x00007fed18dfbb8e:   cmp    $0x0,%ebx
+  0x00007fed18dfbb91:   je     0x00007fed18dfbc9f
+  0x00007fed18dfbb97:   cmp    (%rdi),%rax                  ; implicit exception: dispatches to 0x00007fed18dfbcc0
+  0x00007fed18dfbb9a:   mov    %rdi,%rdx
+  0x00007fed18dfbb9d:   movabs $0x7fecf040a670,%rsi         ;   {metadata(method data for {method} {0x00007fecf04075b8} 'innerLoop' '(Ljdk/incubator/vector/DoubleVector;Ljdk/incubator/vector/DoubleVector;Ljdk/incubator/vector/DoubleVector;)Ljdk/incubator/vector/DoubleVector;' in 'mtakeshi1/playground/vectorapi/JitWatchTest')}
+  0x00007fed18dfbba7:   addq   $0x1,0x138(%rsi)
+  0x00007fed18dfbbaf:   movabs $0x7fecf02372b8,%rdx         ;   {metadata(method data for {method} {0x00007fecf0071f10} 'fma' '(Ljdk/incubator/vector/Vector;Ljdk/incubator/vector/Vector;)Ljdk/incubator/vector/DoubleVector;' in 'jdk/incubator/vector/DoubleVector')}
+  0x00007fed18dfbbb9:   mov    0xf4(%rdx),%esi
+  0x00007fed18dfbbbf:   add    $0x2,%esi
+  0x00007fed18dfbbc2:   mov    %esi,0xf4(%rdx)
+  0x00007fed18dfbbc8:   and    $0x1ffffe,%esi
+  0x00007fed18dfbbce:   cmp    $0x0,%esi
+  0x00007fed18dfbbd1:   je     0x00007fed18dfbcc5
+  0x00007fed18dfbbd7:   mov    %rdi,%rdx
+  0x00007fed18dfbbda:   movabs $0x7fecf02372b8,%rsi         ;   {metadata(method data for {method} {0x00007fecf0071f10} 'fma' '(Ljdk/incubator/vector/Vector;Ljdk/incubator/vector/Vector;)Ljdk/incubator/vector/DoubleVector;' in 'jdk/incubator/vector/DoubleVector')}
+  0x00007fed18dfbbe4:   mov    0x8(%rdx),%edx
+  0x00007fed18dfbbe7:   movabs $0x800000000,%r10
+  0x00007fed18dfbbf1:   add    %r10,%rdx
+  0x00007fed18dfbbf4:   cmp    0x148(%rsi),%rdx
+  0x00007fed18dfbbfb:   jne    0x00007fed18dfbc0a
+  0x00007fed18dfbbfd:   addq   $0x1,0x150(%rsi)
+  0x00007fed18dfbc05:   jmp    0x00007fed18dfbc70
+  0x00007fed18dfbc0a:   cmp    0x158(%rsi),%rdx
+  0x00007fed18dfbc11:   jne    0x00007fed18dfbc20
+  0x00007fed18dfbc13:   addq   $0x1,0x160(%rsi)
+  0x00007fed18dfbc1b:   jmp    0x00007fed18dfbc70
+  0x00007fed18dfbc20:   cmpq   $0x0,0x148(%rsi)
+  0x00007fed18dfbc2b:   jne    0x00007fed18dfbc44
+  0x00007fed18dfbc2d:   mov    %rdx,0x148(%rsi)
+  0x00007fed18dfbc34:   movq   $0x1,0x150(%rsi)
+  0x00007fed18dfbc3f:   jmp    0x00007fed18dfbc70
+  0x00007fed18dfbc44:   cmpq   $0x0,0x158(%rsi)
+  0x00007fed18dfbc4f:   jne    0x00007fed18dfbc68
+  0x00007fed18dfbc51:   mov    %rdx,0x158(%rsi)
+  0x00007fed18dfbc58:   movq   $0x1,0x160(%rsi)
+  0x00007fed18dfbc63:   jmp    0x00007fed18dfbc70
+  0x00007fed18dfbc68:   addq   $0x1,0x138(%rsi)
+  0x00007fed18dfbc70:   movabs $0x62af6a210,%rdx            ;   {oop(a 'jdk/incubator/vector/VectorOperators$TernaryImpl'{0x000000062af6a210})}
+  0x00007fed18dfbc7a:   mov    %rdi,%rsi
+  0x00007fed18dfbc7d:   movabs $0xffffffffffffffff,%rax
+  0x00007fed18dfbc87:   call   0x00007fed20317fa0           ; ImmutableOopMap {}
+                                                            ;*invokevirtual lanewise {reexecute=0 rethrow=0 return_oop=0}
+                                                            ; - jdk.incubator.vector.DoubleVector::fma@6 (line 2451)
+                                                            ; - mtakeshi1.playground.vectorapi.JitWatchTest::innerLoop@3 (line 13)
+                                                            ;   {virtual_call}
+  0x00007fed18dfbc8c:   add    $0x50,%rsp
+  0x00007fed18dfbc90:   pop    %rbp
+  0x00007fed18dfbc91:   cmp    0x378(%r15),%rsp             ;   {poll_return}
+  0x00007fed18dfbc98:   ja     0x00007fed18dfbce6
+  0x00007fed18dfbc9e:   ret
+  0x00007fed18dfbc9f:   movabs $0x7fecf04075b8,%r10         ;   {metadata({method} {0x00007fecf04075b8} 'innerLoop' '(Ljdk/incubator/vector/DoubleVector;Ljdk/incubator/vector/DoubleVector;Ljdk/incubator/vector/DoubleVector;)Ljdk/incubator/vector/DoubleVector;' in 'mtakeshi1/playground/vectorapi/JitWatchTest')}
+  0x00007fed18dfbca9:   mov    %r10,0x8(%rsp)
+  0x00007fed18dfbcae:   movq   $0xffffffffffffffff,(%rsp)
+  0x00007fed18dfbcb6:   call   0x00007fed203c7e80           ; ImmutableOopMap {rsi=Oop rdi=Oop rcx=Oop r8=Oop }
+                                                            ;*synchronization entry
+                                                            ; - mtakeshi1.playground.vectorapi.JitWatchTest::innerLoop@-1 (line 13)
+                                                            ;   {runtime_call counter_overflow Runtime1 stub}
+  0x00007fed18dfbcbb:   jmp    0x00007fed18dfbb97
+  0x00007fed18dfbcc0:   call   0x00007fed203c0fa0           ; ImmutableOopMap {rdi=Oop rcx=Oop r8=Oop }
+                                                            ;*invokevirtual fma {reexecute=0 rethrow=0 return_oop=0}
+                                                            ; - mtakeshi1.playground.vectorapi.JitWatchTest::innerLoop@3 (line 13)
+                                                            ;   {runtime_call throw_null_pointer_exception Runtime1 stub}
+  0x00007fed18dfbcc5:   movabs $0x7fecf0071f10,%r10         ;   {metadata({method} {0x00007fecf0071f10} 'fma' '(Ljdk/incubator/vector/Vector;Ljdk/incubator/vector/Vector;)Ljdk/incubator/vector/DoubleVector;' in 'jdk/incubator/vector/DoubleVector')}
+  0x00007fed18dfbccf:   mov    %r10,0x8(%rsp)
+  0x00007fed18dfbcd4:   movq   $0xffffffffffffffff,(%rsp)
+  0x00007fed18dfbcdc:   call   0x00007fed203c7e80           ; ImmutableOopMap {rdi=Oop rcx=Oop r8=Oop }
+                                                            ;*synchronization entry
+                                                            ; - jdk.incubator.vector.DoubleVector::fma@-1 (line 2451)
+                                                            ; - mtakeshi1.playground.vectorapi.JitWatchTest::innerLoop@3 (line 13)
+                                                            ;   {runtime_call counter_overflow Runtime1 stub}
+  0x00007fed18dfbce1:   jmp    0x00007fed18dfbbd7
+  0x00007fed18dfbce6:   movabs $0x7fed18dfbc91,%r10         ;   {internal_word}
+  0x00007fed18dfbcf0:   mov    %r10,0x390(%r15)
+  0x00007fed18dfbcf7:   jmp    0x00007fed20321300           ;   {runtime_call SafepointBlob}
+  0x00007fed18dfbcfc:   mov    0x420(%r15),%rax
+  0x00007fed18dfbd03:   movq   $0x0,0x420(%r15)
+  0x00007fed18dfbd0e:   movq   $0x0,0x428(%r15)
+  0x00007fed18dfbd19:   add    $0x50,%rsp
+  0x00007fed18dfbd1d:   pop    %rbp
+  0x00007fed18dfbd1e:   jmp    0x00007fed20332700           ;   {runtime_call unwind_exception Runtime1 stub}
+  0x00007fed18dfbd23:   hlt
+  0x00007fed18dfbd24:   hlt
+  0x00007fed18dfbd25:   hlt
+  0x00007fed18dfbd26:   hlt
+  0x00007fed18dfbd27:   hlt
+  0x00007fed18dfbd28:   hlt
+  0x00007fed18dfbd29:   hlt
+  0x00007fed18dfbd2a:   hlt
+  0x00007fed18dfbd2b:   hlt
+  0x00007fed18dfbd2c:   hlt
+  0x00007fed18dfbd2d:   hlt
+  0x00007fed18dfbd2e:   hlt
+  0x00007fed18dfbd2f:   hlt
+  0x00007fed18dfbd30:   hlt
+  0x00007fed18dfbd31:   hlt
+  0x00007fed18dfbd32:   hlt
+  0x00007fed18dfbd33:   hlt
+  0x00007fed18dfbd34:   hlt
+  0x00007fed18dfbd35:   hlt
+  0x00007fed18dfbd36:   hlt
+  0x00007fed18dfbd37:   hlt
+  0x00007fed18dfbd38:   hlt
+  0x00007fed18dfbd39:   hlt
+  0x00007fed18dfbd3a:   hlt
+  0x00007fed18dfbd3b:   hlt
+  0x00007fed18dfbd3c:   hlt
+  0x00007fed18dfbd3d:   hlt
+  0x00007fed18dfbd3e:   hlt
+  0x00007fed18dfbd3f:   hlt
+[Stub Code]
+  0x00007fed18dfbd40:   nopl   0x0(%rax,%rax,1)             ;   {no_reloc}
+  0x00007fed18dfbd45:   movabs $0x0,%rbx                    ;   {static_stub}
+  0x00007fed18dfbd4f:   jmp    0x00007fed18dfbd4f           ;   {runtime_call}
+[Exception Handler]
+  0x00007fed18dfbd54:   call   0x00007fed203c3680           ;   {runtime_call handle_exception_from_callee Runtime1 stub}
+  0x00007fed18dfbd59:   movabs $0x7fed383bcbb7,%rdi         ;   {external_word}
+  0x00007fed18dfbd63:   and    $0xfffffffffffffff0,%rsp
+  0x00007fed18dfbd67:   call   0x00007fed37f28870           ;   {runtime_call MacroAssembler::debug64(char*, long, long*)}
+  0x00007fed18dfbd6c:   hlt
+[Deopt Handler Code]
+  0x00007fed18dfbd6d:   movabs $0x7fed18dfbd6d,%r10         ;   {section_word}
+  0x00007fed18dfbd77:   push   %r10
+  0x00007fed18dfbd79:   jmp    0x00007fed203205a0           ;   {runtime_call DeoptimizationBlob}
+  0x00007fed18dfbd7e:   hlt
+  0x00007fed18dfbd7f:   hlt
+--------------------------------------------------------------------------------
+[/Disassembly]
+
+============================= C2-compiled nmethod ==============================
+----------------------------------- Assembly -----------------------------------
+
+Compiled method (c2)    1236  482       4       mtakeshi1.playground.vectorapi.JitWatchTest::innerLoop (7 bytes)
+ total in heap  [0x00007fed20878490,0x00007fed20878b98] = 1800
+ relocation     [0x00007fed208785f0,0x00007fed20878630] = 64
+ main code      [0x00007fed20878640,0x00007fed208788e0] = 672
+ stub code      [0x00007fed208788e0,0x00007fed208788f8] = 24
+ oops           [0x00007fed208788f8,0x00007fed20878920] = 40
+ metadata       [0x00007fed20878920,0x00007fed20878998] = 120
+ scopes data    [0x00007fed20878998,0x00007fed20878a98] = 256
+ scopes pcs     [0x00007fed20878a98,0x00007fed20878b38] = 160
+ dependencies   [0x00007fed20878b38,0x00007fed20878b48] = 16
+ handler table  [0x00007fed20878b48,0x00007fed20878b78] = 48
+ nul chk table  [0x00007fed20878b78,0x00007fed20878b98] = 32
+
+[Disassembly]
+--------------------------------------------------------------------------------
+[Constant Pool (empty)]
+
+--------------------------------------------------------------------------------
+
+[Entry Point]
+  # {method} {0x00007fecf04075b8} 'innerLoop' '(Ljdk/incubator/vector/DoubleVector;Ljdk/incubator/vector/DoubleVector;Ljdk/incubator/vector/DoubleVector;)Ljdk/incubator/vector/DoubleVector;' in 'mtakeshi1/playground/vectorapi/JitWatchTest'
+  # this:     rsi:rsi   = 'mtakeshi1/playground/vectorapi/JitWatchTest'
+  # parm0:    rdx:rdx   = 'jdk/incubator/vector/DoubleVector'
+  # parm1:    rcx:rcx   = 'jdk/incubator/vector/DoubleVector'
+  # parm2:    r8:r8     = 'jdk/incubator/vector/DoubleVector'
+  #           [sp+0x60]  (sp of caller)
+  0x00007fed20878640:   mov    0x8(%rsi),%r10d
+  0x00007fed20878644:   movabs $0x800000000,%r11
+  0x00007fed2087864e:   add    %r11,%r10
+  0x00007fed20878651:   cmp    %r10,%rax
+  0x00007fed20878654:   jne    0x00007fed2031ac80           ;   {runtime_call ic_miss_stub}
+  0x00007fed2087865a:   xchg   %ax,%ax
+  0x00007fed2087865c:   nopl   0x0(%rax)
+[Verified Entry Point]
+  0x00007fed20878660:   mov    %eax,-0x14000(%rsp)
+  0x00007fed20878667:   push   %rbp
+  0x00007fed20878668:   sub    $0x50,%rsp
+  0x00007fed2087866c:   mov    %rdx,%r10
+  0x00007fed2087866f:   mov    0x8(%rdx),%r11d              ; implicit exception: dispatches to 0x00007fed20878870
+  0x00007fed20878673:   cmp    $0x1054ea8,%r11d             ;   {metadata('jdk/incubator/vector/Double256Vector')}
+  0x00007fed2087867a:   jne    0x00007fed208787de
+  0x00007fed20878680:   mov    %r10,0x20(%rsp)
+  0x00007fed20878685:   mov    0x8(%rcx),%r11d              ; implicit exception: dispatches to 0x00007fed20878884
+  0x00007fed20878689:   cmp    $0x1054ea8,%r11d             ;   {metadata('jdk/incubator/vector/Double256Vector')}
+  0x00007fed20878690:   jne    0x00007fed208787f8
+  0x00007fed20878696:   mov    0x8(%r8),%r11d               ; implicit exception: dispatches to 0x00007fed20878894
+  0x00007fed2087869a:   mov    %rcx,0x10(%rsp)
+  0x00007fed2087869f:   cmp    $0x1054ea8,%r11d             ;   {metadata('jdk/incubator/vector/Double256Vector')}
+  0x00007fed208786a6:   jne    0x00007fed20878834
+  0x00007fed208786ac:   mov    %r8,0x18(%rsp)
+  0x00007fed208786b1:   mov    0xf8(%r15),%rbp
+  0x00007fed208786b8:   mov    %rbp,%r10
+  0x00007fed208786bb:   add    $0x30,%r10
+  0x00007fed208786bf:   cmp    0x108(%r15),%r10
+  0x00007fed208786c6:   jae    0x00007fed2087879b
+  0x00007fed208786cc:   mov    %r10,0xf8(%r15)
+  0x00007fed208786d3:   prefetchnta 0x100(%r10)
+  0x00007fed208786db:   movq   $0x1,0x0(%rbp)
+  0x00007fed208786e3:   prefetchnta 0x140(%r10)
+  0x00007fed208786eb:   movl   $0x2020,0x8(%rbp)            ;   {metadata({type array double})}
+  0x00007fed208786f2:   prefetchnta 0x180(%r10)
+  0x00007fed208786fa:   movl   $0x4,0xc(%rbp)
+  0x00007fed20878701:   mov    %r12,0x10(%rbp)
+  0x00007fed20878705:   mov    %r12,0x18(%rbp)
+  0x00007fed20878709:   mov    %r12,0x20(%rbp)
+  0x00007fed2087870d:   mov    %r12,0x28(%rbp)
+  0x00007fed20878711:   mov    0x20(%rsp),%r10
+  0x00007fed20878716:   mov    0xc(%r10),%r10d
+  0x00007fed2087871a:   mov    0xf8(%r15),%rax
+  0x00007fed20878721:   vmovdqu 0x10(%r12,%r10,8),%ymm0
+  0x00007fed20878728:   mov    %rax,%r8
+  0x00007fed2087872b:   add    $0x10,%r8
+  0x00007fed2087872f:   mov    0x10(%rsp),%r10
+  0x00007fed20878734:   mov    0xc(%r10),%r10d
+  0x00007fed20878738:   mov    0x18(%rsp),%r11
+  0x00007fed2087873d:   mov    0xc(%r11),%r11d
+  0x00007fed20878741:   vmovdqu 0x10(%r12,%r11,8),%ymm1
+  0x00007fed20878748:   vfmadd231pd 0x10(%r12,%r10,8),%ymm0,%ymm1
+  0x00007fed2087874f:   vmovdqu %ymm1,0x10(%rbp)
+  0x00007fed20878754:   cmp    0x108(%r15),%r8
+  0x00007fed2087875b:   jae    0x00007fed208787c0
+  0x00007fed2087875d:   mov    %r8,0xf8(%r15)
+  0x00007fed20878764:   prefetchnta 0x100(%r8)
+  0x00007fed2087876c:   movq   $0x1,(%rax)
+  0x00007fed20878773:   movl   $0x1054ea8,0x8(%rax)         ;   {metadata('jdk/incubator/vector/Double256Vector')}
+  0x00007fed2087877a:   mov    %rbp,%r11
+  0x00007fed2087877d:   shr    $0x3,%r11
+  0x00007fed20878781:   mov    %r11d,0xc(%rax)
+  0x00007fed20878785:   vzeroupper
+  0x00007fed20878788:   add    $0x50,%rsp
+  0x00007fed2087878c:   pop    %rbp
+  0x00007fed2087878d:   cmp    0x378(%r15),%rsp             ;   {poll_return}
+  0x00007fed20878794:   ja     0x00007fed208788b9
+  0x00007fed2087879a:   ret
+  0x00007fed2087879b:   movabs $0x800002020,%rsi            ;   {metadata({type array double})}
+  0x00007fed208787a5:   mov    $0x4,%edx
+  0x00007fed208787aa:   mov    0x20(%rsp),%rbp
+  0x00007fed208787af:   nop
+  0x00007fed208787b0:   vzeroupper
+  0x00007fed208787b3:   call   0x00007fed203c9f00           ; ImmutableOopMap {rbp=Oop [16]=Oop [24]=Oop [32]=Oop }
+                                                            ;*invokestatic ternaryOp {reexecute=1 rethrow=0 return_oop=1}
+                                                            ; - (reexecute) jdk.incubator.vector.DoubleVector::lanewiseTemplate@69 (line 986)
+                                                            ; - jdk.incubator.vector.Double256Vector::lanewise@4 (line 301)
+                                                            ; - jdk.incubator.vector.Double256Vector::lanewise@4 (line 41)
+                                                            ; - jdk.incubator.vector.DoubleVector::fma@6 (line 2451)
+                                                            ; - mtakeshi1.playground.vectorapi.JitWatchTest::innerLoop@3 (line 13)
+                                                            ;   {runtime_call _new_array_Java}
+  0x00007fed208787b8:   mov    %rax,%rbp
+  0x00007fed208787bb:   jmp    0x00007fed20878711
+  0x00007fed208787c0:   movabs $0x801054ea8,%rsi            ;   {metadata('jdk/incubator/vector/Double256Vector')}
+  0x00007fed208787ca:   rex.W push 0x10(%rsp)
+  0x00007fed208787cf:   rex.W pop 0x8(%rsp)
+  0x00007fed208787d4:   vzeroupper
+  0x00007fed208787d7:   call   0x00007fed203cc400           ; ImmutableOopMap {rbp=Oop [8]=Oop [24]=Oop [32]=Oop }
+                                                            ;*invokestatic ternaryOp {reexecute=1 rethrow=0 return_oop=1}
+                                                            ; - (reexecute) jdk.incubator.vector.DoubleVector::lanewiseTemplate@69 (line 986)
+                                                            ; - jdk.incubator.vector.Double256Vector::lanewise@4 (line 301)
+                                                            ; - jdk.incubator.vector.Double256Vector::lanewise@4 (line 41)
+                                                            ; - jdk.incubator.vector.DoubleVector::fma@6 (line 2451)
+                                                            ; - mtakeshi1.playground.vectorapi.JitWatchTest::innerLoop@3 (line 13)
+                                                            ;   {runtime_call _new_instance_Java}
+  0x00007fed208787dc:   jmp    0x00007fed2087877a
+  0x00007fed208787de:   mov    $0xffffffde,%esi
+  0x00007fed208787e3:   mov    %rdx,%rbp
+  0x00007fed208787e6:   mov    %rcx,(%rsp)
+  0x00007fed208787ea:   mov    %r8,0x8(%rsp)
+  0x00007fed208787ef:   nop
+  0x00007fed208787f0:   vzeroupper
+  0x00007fed208787f3:   call   0x00007fed20320200           ; ImmutableOopMap {rbp=Oop [0]=Oop [8]=Oop }
+                                                            ;*invokevirtual lanewise {reexecute=0 rethrow=0 return_oop=0}
+                                                            ; - jdk.incubator.vector.DoubleVector::fma@6 (line 2451)
+                                                            ; - mtakeshi1.playground.vectorapi.JitWatchTest::innerLoop@3 (line 13)
+                                                            ;   {runtime_call UncommonTrapBlob}
+  0x00007fed208787f8:   mov    $0xffffff66,%esi
+  0x00007fed208787fd:   movabs $0x800000000,%r10
+  0x00007fed20878807:   add    %r11,%r10
+  0x00007fed2087880a:   mov    0x70(%r10),%r10
+  0x00007fed2087880e:   mov    (%r10),%rbp
+  0x00007fed20878811:   rex.W push 0x20(%rsp)
+  0x00007fed20878816:   rex.W pop (%rsp)
+  0x00007fed2087881a:   mov    %r8,0x10(%rsp)
+  0x00007fed2087881f:   mov    %rcx,0x18(%rsp)
+  0x00007fed20878824:   mov    %rcx,0x28(%rsp)
+  0x00007fed20878829:   data16 xchg %ax,%ax
+  0x00007fed2087882c:   vzeroupper
+  0x00007fed2087882f:   call   0x00007fed20320200           ; ImmutableOopMap {rbp=Oop [0]=Oop [16]=Oop [24]=Oop [40]=Oop }
+                                                            ;*if_acmpne {reexecute=1 rethrow=0 return_oop=0}
+                                                            ; - (reexecute) jdk.incubator.vector.AbstractVector::sameSpecies@8 (line 139)
+                                                            ; - jdk.incubator.vector.AbstractVector::check@2 (line 130)
+                                                            ; - jdk.incubator.vector.DoubleVector::lanewiseTemplate@15 (line 983)
+                                                            ; - jdk.incubator.vector.Double256Vector::lanewise@4 (line 301)
+                                                            ; - jdk.incubator.vector.Double256Vector::lanewise@4 (line 41)
+                                                            ; - jdk.incubator.vector.DoubleVector::fma@6 (line 2451)
+                                                            ; - mtakeshi1.playground.vectorapi.JitWatchTest::innerLoop@3 (line 13)
+                                                            ;   {runtime_call UncommonTrapBlob}
+  0x00007fed20878834:   mov    $0xffffff66,%esi
+  0x00007fed20878839:   movabs $0x800000000,%r10
+  0x00007fed20878843:   add    %r11,%r10
+  0x00007fed20878846:   mov    0x70(%r10),%r10
+  0x00007fed2087884a:   mov    (%r10),%rbp
+  0x00007fed2087884d:   rex.W push 0x20(%rsp)
+  0x00007fed20878852:   rex.W pop (%rsp)
+  0x00007fed20878856:   mov    %rcx,0x8(%rsp)
+  0x00007fed2087885b:   mov    %r8,0x18(%rsp)
+  0x00007fed20878860:   mov    %r8,0x28(%rsp)
+  0x00007fed20878865:   data16 xchg %ax,%ax
+  0x00007fed20878868:   vzeroupper
+  0x00007fed2087886b:   call   0x00007fed20320200           ; ImmutableOopMap {rbp=Oop [0]=Oop [8]=Oop [24]=Oop [40]=Oop }
+                                                            ;*if_acmpne {reexecute=1 rethrow=0 return_oop=0}
+                                                            ; - (reexecute) jdk.incubator.vector.AbstractVector::sameSpecies@8 (line 139)
+                                                            ; - jdk.incubator.vector.AbstractVector::check@2 (line 130)
+                                                            ; - jdk.incubator.vector.DoubleVector::lanewiseTemplate@22 (line 984)
+                                                            ; - jdk.incubator.vector.Double256Vector::lanewise@4 (line 301)
+                                                            ; - jdk.incubator.vector.Double256Vector::lanewise@4 (line 41)
+                                                            ; - jdk.incubator.vector.DoubleVector::fma@6 (line 2451)
+                                                            ; - mtakeshi1.playground.vectorapi.JitWatchTest::innerLoop@3 (line 13)
+                                                            ;   {runtime_call UncommonTrapBlob}
+  0x00007fed20878870:   mov    $0xfffffff6,%esi
+  0x00007fed20878875:   mov    %rcx,%rbp
+  0x00007fed20878878:   mov    %r8,(%rsp)
+  0x00007fed2087887c:   vzeroupper
+  0x00007fed2087887f:   call   0x00007fed20320200           ; ImmutableOopMap {rbp=Oop [0]=Oop }
+                                                            ;*invokevirtual fma {reexecute=0 rethrow=0 return_oop=0}
+                                                            ; - mtakeshi1.playground.vectorapi.JitWatchTest::innerLoop@3 (line 13)
+                                                            ;   {runtime_call UncommonTrapBlob}
+  0x00007fed20878884:   mov    $0xffffff5e,%esi
+  0x00007fed20878889:   mov    %r10,%rbp
+  0x00007fed2087888c:   vzeroupper
+  0x00007fed2087888f:   call   0x00007fed20320200           ; ImmutableOopMap {rbp=Oop }
+                                                            ;*invokevirtual check {reexecute=0 rethrow=0 return_oop=0}
+                                                            ; - jdk.incubator.vector.DoubleVector::lanewiseTemplate@15 (line 983)
+                                                            ; - jdk.incubator.vector.Double256Vector::lanewise@4 (line 301)
+                                                            ; - jdk.incubator.vector.Double256Vector::lanewise@4 (line 41)
+                                                            ; - jdk.incubator.vector.DoubleVector::fma@6 (line 2451)
+                                                            ; - mtakeshi1.playground.vectorapi.JitWatchTest::innerLoop@3 (line 13)
+                                                            ;   {runtime_call UncommonTrapBlob}
+  0x00007fed20878894:   mov    $0xffffff5e,%esi
+  0x00007fed20878899:   mov    %r10,%rbp
+  0x00007fed2087889c:   vzeroupper
+  0x00007fed2087889f:   call   0x00007fed20320200           ; ImmutableOopMap {rbp=Oop }
+                                                            ;*invokevirtual check {reexecute=0 rethrow=0 return_oop=0}
+                                                            ; - jdk.incubator.vector.DoubleVector::lanewiseTemplate@22 (line 984)
+                                                            ; - jdk.incubator.vector.Double256Vector::lanewise@4 (line 301)
+                                                            ; - jdk.incubator.vector.Double256Vector::lanewise@4 (line 41)
+                                                            ; - jdk.incubator.vector.DoubleVector::fma@6 (line 2451)
+                                                            ; - mtakeshi1.playground.vectorapi.JitWatchTest::innerLoop@3 (line 13)
+                                                            ;   {runtime_call UncommonTrapBlob}
+  0x00007fed208788a4:   mov    %rax,%rsi
+  0x00007fed208788a7:   jmp    0x00007fed208788ac
+  0x00007fed208788a9:   mov    %rax,%rsi
+  0x00007fed208788ac:   vzeroupper
+  0x00007fed208788af:   add    $0x50,%rsp
+  0x00007fed208788b3:   pop    %rbp
+  0x00007fed208788b4:   jmp    0x00007fed203ccf80           ;   {runtime_call _rethrow_Java}
+  0x00007fed208788b9:   movabs $0x7fed2087878d,%r10         ;   {internal_word}
+  0x00007fed208788c3:   mov    %r10,0x390(%r15)
+  0x00007fed208788ca:   jmp    0x00007fed20321300           ;   {runtime_call SafepointBlob}
+  0x00007fed208788cf:   hlt
+  0x00007fed208788d0:   hlt
+  0x00007fed208788d1:   hlt
+  0x00007fed208788d2:   hlt
+  0x00007fed208788d3:   hlt
+  0x00007fed208788d4:   hlt
+  0x00007fed208788d5:   hlt
+  0x00007fed208788d6:   hlt
+  0x00007fed208788d7:   hlt
+  0x00007fed208788d8:   hlt
+  0x00007fed208788d9:   hlt
+  0x00007fed208788da:   hlt
+  0x00007fed208788db:   hlt
+  0x00007fed208788dc:   hlt
+  0x00007fed208788dd:   hlt
+  0x00007fed208788de:   hlt
+  0x00007fed208788df:   hlt
+[Exception Handler]
+  0x00007fed208788e0:   jmp    0x00007fed203bfa80           ;   {no_reloc}
+[Deopt Handler Code]
+  0x00007fed208788e5:   call   0x00007fed208788ea
+  0x00007fed208788ea:   subq   $0x5,(%rsp)
+  0x00007fed208788ef:   jmp    0x00007fed203205a0           ;   {runtime_call DeoptimizationBlob}
+  0x00007fed208788f4:   hlt
+  0x00007fed208788f5:   hlt
+  0x00007fed208788f6:   hlt
+  0x00007fed208788f7:   hlt
+--------------------------------------------------------------------------------
+[/Disassembly]
+
+============================= C2-compiled nmethod ==============================
+----------------------------------- Assembly -----------------------------------
+
+Compiled method (c2)    1252  487 %     4       mtakeshi1.playground.vectorapi.JitWatchTest::fmaVector @ 23 (117 bytes)
+ total in heap  [0x00007fed2087d710,0x00007fed2087e338] = 3112
+ relocation     [0x00007fed2087d870,0x00007fed2087d8b8] = 72
+ main code      [0x00007fed2087d8c0,0x00007fed2087de40] = 1408
+ stub code      [0x00007fed2087de40,0x00007fed2087de58] = 24
+ oops           [0x00007fed2087de58,0x00007fed2087de80] = 40
+ metadata       [0x00007fed2087de80,0x00007fed2087df40] = 192
+ scopes data    [0x00007fed2087df40,0x00007fed2087e200] = 704
+ scopes pcs     [0x00007fed2087e200,0x00007fed2087e2c0] = 192
+ dependencies   [0x00007fed2087e2c0,0x00007fed2087e2d8] = 24
+ handler table  [0x00007fed2087e2d8,0x00007fed2087e308] = 48
+ nul chk table  [0x00007fed2087e308,0x00007fed2087e338] = 48
+
+[Disassembly]
+--------------------------------------------------------------------------------
+[Constant Pool (empty)]
+
+--------------------------------------------------------------------------------
+
+[Verified Entry Point]
+  # {method} {0x00007fecf0407750} 'fmaVector' '([D[D)D' in 'mtakeshi1/playground/vectorapi/JitWatchTest'
+  0x00007fed2087d8c0:   call   0x00007fed3804d4e0           ;   {runtime_call os::breakpoint()}
+  0x00007fed2087d8c5:   data16 data16 nopw 0x0(%rax,%rax,1)
+  0x00007fed2087d8d0:   mov    %eax,-0x14000(%rsp)
+  0x00007fed2087d8d7:   push   %rbp
+  0x00007fed2087d8d8:   sub    $0xd0,%rsp
+  0x00007fed2087d8df:   mov    0x40(%rsi),%rbp
+  0x00007fed2087d8e3:   mov    0x38(%rsi),%r13
+  0x00007fed2087d8e7:   mov    0x18(%rsi),%r11d
+  0x00007fed2087d8eb:   mov    %r11d,0x40(%rsp)
+  0x00007fed2087d8f0:   mov    0x30(%rsi),%r14
+  0x00007fed2087d8f4:   mov    0x28(%rsi),%r10
+  0x00007fed2087d8f8:   mov    %r10,(%rsp)
+  0x00007fed2087d8fc:   mov    0x10(%rsi),%r10
+  0x00007fed2087d900:   mov    %r10,0x8(%rsp)
+  0x00007fed2087d905:   mov    0x20(%rsi),%ebx
+  0x00007fed2087d908:   mov    %ebx,0x10(%rsp)
+  0x00007fed2087d90c:   mov    %rsi,%rdi
+  0x00007fed2087d90f:   vzeroupper
+  0x00007fed2087d912:   movabs $0x7fed3810a8a0,%r10
+  0x00007fed2087d91c:   call   *%r10
+  0x00007fed2087d91f:   test   %rbp,%rbp
+  0x00007fed2087d922:   je     0x00007fed2087dcf4
+  0x00007fed2087d928:   mov    %rbp,%rbx
+  0x00007fed2087d92b:   mov    0x8(%rbp),%r10d
+  0x00007fed2087d92f:   cmp    $0x1003000,%r10d             ;   {metadata('mtakeshi1/playground/vectorapi/JitWatchTest')}
+  0x00007fed2087d936:   jne    0x00007fed2087dd40
+  0x00007fed2087d93c:   mov    %rbp,%r8
+  0x00007fed2087d93f:   test   %r13,%r13
+  0x00007fed2087d942:   je     0x00007fed2087dcff
+  0x00007fed2087d948:   mov    0x8(%r13),%r11d
+  0x00007fed2087d94c:   cmp    $0x2020,%r11d                ;   {metadata({type array double})}
+  0x00007fed2087d953:   jne    0x00007fed2087dd46
+  0x00007fed2087d959:   mov    %r13,%r9
+  0x00007fed2087d95c:   test   %r14,%r14
+  0x00007fed2087d95f:   je     0x00007fed2087dd07
+  0x00007fed2087d965:   mov    0x8(%r14),%r10d
+  0x00007fed2087d969:   cmp    $0x2020,%r10d                ;   {metadata({type array double})}
+  0x00007fed2087d970:   jne    0x00007fed2087dd4c
+  0x00007fed2087d976:   mov    %r14,%rdx
+  0x00007fed2087d979:   mov    (%rsp),%r11
+  0x00007fed2087d97d:   test   %r11,%r11
+  0x00007fed2087d980:   je     0x00007fed2087dd0e
+  0x00007fed2087d986:   mov    0x8(%r11),%r10d
+  0x00007fed2087d98a:   movabs $0x801051158,%rax            ;   {metadata('jdk/incubator/vector/VectorSpecies')}
+  0x00007fed2087d994:   movabs $0x800000000,%rsi
+  0x00007fed2087d99e:   add    %r10,%rsi
+  0x00007fed2087d9a1:   mov    0x20(%rsi),%r10
+  0x00007fed2087d9a5:   cmp    %rax,%r10
+  0x00007fed2087d9a8:   jne    0x00007fed2087dca4
+  0x00007fed2087d9ae:   mov    %r11,%r10
+  0x00007fed2087d9b1:   mov    0x8(%rsp),%rcx
+  0x00007fed2087d9b6:   test   %rcx,%rcx
+  0x00007fed2087d9b9:   je     0x00007fed2087dd16
+  0x00007fed2087d9bf:   mov    %r10,%rsi
+  0x00007fed2087d9c2:   mov    %r8,%r10
+  0x00007fed2087d9c5:   mov    0x8(%rcx),%r8d
+  0x00007fed2087d9c9:   movabs $0x801044868,%rcx            ;   {metadata('jdk/incubator/vector/DoubleVector')}
+  0x00007fed2087d9d3:   movabs $0x800000000,%rdi
+  0x00007fed2087d9dd:   add    %r8,%rdi
+  0x00007fed2087d9e0:   mov    0x58(%rdi),%r8
+  0x00007fed2087d9e4:   cmp    %rcx,%r8
+  0x00007fed2087d9e7:   jne    0x00007fed2087dd50
+  0x00007fed2087d9ed:   mov    0x8(%rsp),%rbx
+  0x00007fed2087d9f2:   mov    %r10,%r8
+  0x00007fed2087d9f5:   mov    %rsi,%r10
+  0x00007fed2087d9f8:   mov    0x8(%r10),%ecx               ; implicit exception: dispatches to 0x00007fed2087dd1d
+  0x00007fed2087d9fc:   cmp    $0x1051900,%ecx              ;   {metadata('jdk/incubator/vector/DoubleVector$DoubleSpecies')}
+  0x00007fed2087da02:   jne    0x00007fed2087dd1d
+  0x00007fed2087da08:   mov    0xc(%r9),%ebp                ; implicit exception: dispatches to 0x00007fed2087dd1d
+  0x00007fed2087da0c:   mov    %r10,%rsi
+  0x00007fed2087da0f:   mov    0xc(%rsi),%ecx
+  0x00007fed2087da12:   sub    %ecx,%ebp
+  0x00007fed2087da14:   inc    %ebp
+  0x00007fed2087da16:   test   %ebp,%ebp
+  0x00007fed2087da18:   jl     0x00007fed2087dd1d
+  0x00007fed2087da1e:   mov    0x44(%rsi),%r11d
+  0x00007fed2087da22:   mov    0x8(%r12,%r11,8),%edi        ; implicit exception: dispatches to 0x00007fed2087dd1d
+  0x00007fed2087da27:   cmp    $0x1054ea8,%edi              ;   {metadata('jdk/incubator/vector/Double256Vector')}
+  0x00007fed2087da2d:   jne    0x00007fed2087dd1d
+  0x00007fed2087da33:   mov    0xc(%rdx),%r11d              ; implicit exception: dispatches to 0x00007fed2087dd1d
+  0x00007fed2087da37:   sub    %ecx,%r11d
+  0x00007fed2087da3a:   inc    %r11d
+  0x00007fed2087da3d:   test   %r11d,%r11d
+  0x00007fed2087da40:   jl     0x00007fed2087dd1d
+  0x00007fed2087da46:   test   %r8,%r8
+  0x00007fed2087da49:   je     0x00007fed2087dd1d
+  0x00007fed2087da4f:   mov    %r11d,0x74(%rsp)
+  0x00007fed2087da54:   mov    %ecx,0x70(%rsp)
+  0x00007fed2087da58:   mov    %rsi,0x68(%rsp)
+  0x00007fed2087da5d:   mov    %ebp,0x44(%rsp)
+  0x00007fed2087da61:   mov    %r10,0x60(%rsp)
+  0x00007fed2087da66:   mov    %rdx,0x58(%rsp)
+  0x00007fed2087da6b:   mov    %r9,0x50(%rsp)
+  0x00007fed2087da70:   mov    %r8,0x48(%rsp)
+  0x00007fed2087da75:   mov    %rbx,%r10
+  0x00007fed2087da78:   jmp    0x00007fed2087dac9
+  0x00007fed2087da7a:   nopw   0x0(%rax,%rax,1)
+  0x00007fed2087da80:   mov    %r10,0xf8(%r15)
+  0x00007fed2087da87:   prefetchnta 0x100(%r10)
+  0x00007fed2087da8f:   movq   $0x1,(%rax)
+  0x00007fed2087da96:   movl   $0x1054ea8,0x8(%rax)         ;   {metadata('jdk/incubator/vector/Double256Vector')}
+  0x00007fed2087da9d:   mov    0x78(%rsp),%r11d
+  0x00007fed2087daa2:   add    0x70(%rsp),%r11d
+  0x00007fed2087daa7:   mov    %r11d,0x10(%rsp)
+  0x00007fed2087daac:   mov    0x80(%rsp),%r10
+  0x00007fed2087dab4:   shr    $0x3,%r10
+  0x00007fed2087dab8:   mov    %r10d,0xc(%rax)
+  0x00007fed2087dabc:   mov    %rax,%r10
+  0x00007fed2087dabf:   mov    0x380(%r15),%r11             ; ImmutableOopMap {r10=Oop [72]=Oop [80]=Oop [88]=Oop [96]=Oop [104]=Oop }
+                                                            ;*goto {reexecute=1 rethrow=0 return_oop=0}
+                                                            ; - (reexecute) mtakeshi1.playground.vectorapi.JitWatchTest::fmaVector@71 (line 20)
+  0x00007fed2087dac6:   test   %eax,(%r11)                  ;   {poll}
+  0x00007fed2087dac9:   mov    0x10(%rsp),%r11d
+  0x00007fed2087dace:   cmp    0x40(%rsp),%r11d
+  0x00007fed2087dad3:   jge    0x00007fed2087dcc9
+  0x00007fed2087dad9:   cmp    0x44(%rsp),%r11d
+  0x00007fed2087dade:   jae    0x00007fed2087dc30
+  0x00007fed2087dae4:   mov    %r11d,0x78(%rsp)
+  0x00007fed2087dae9:   mov    0x50(%rsp),%r11
+  0x00007fed2087daee:   mov    0x78(%rsp),%r8d
+  0x00007fed2087daf3:   vmovdqu 0x10(%r11,%r8,8),%ymm1
+  0x00007fed2087dafa:   mov    %r8d,%r11d
+  0x00007fed2087dafd:   cmp    0x74(%rsp),%r11d
+  0x00007fed2087db02:   jae    0x00007fed2087dc50
+  0x00007fed2087db08:   mov    0x8(%r10),%r8d               ; implicit exception: dispatches to 0x00007fed2087ddf8
+  0x00007fed2087db0c:   mov    0x58(%rsp),%r9
+  0x00007fed2087db11:   vmovdqu 0x10(%r9,%r11,8),%ymm2
+  0x00007fed2087db18:   cmp    $0x1054ea8,%r8d              ;   {metadata('jdk/incubator/vector/Double256Vector')}
+  0x00007fed2087db1f:   jne    0x00007fed2087dd78
+  0x00007fed2087db25:   mov    %r10,%rbp
+  0x00007fed2087db28:   mov    0xf8(%r15),%rax
+  0x00007fed2087db2f:   mov    %rax,%r10
+  0x00007fed2087db32:   add    $0x30,%r10
+  0x00007fed2087db36:   cmp    0x108(%r15),%r10
+  0x00007fed2087db3d:   jae    0x00007fed2087dbfe
+  0x00007fed2087db43:   mov    %r10,0xf8(%r15)
+  0x00007fed2087db4a:   prefetchnta 0x100(%r10)
+  0x00007fed2087db52:   movq   $0x1,(%rax)
+  0x00007fed2087db59:   prefetchnta 0x140(%r10)
+  0x00007fed2087db61:   movl   $0x2020,0x8(%rax)            ;   {metadata({type array double})}
+  0x00007fed2087db68:   prefetchnta 0x180(%r10)
+  0x00007fed2087db70:   movl   $0x4,0xc(%rax)
+  0x00007fed2087db77:   mov    %r12,0x10(%rax)
+  0x00007fed2087db7b:   mov    %r12,0x18(%rax)
+  0x00007fed2087db7f:   mov    %r12,0x20(%rax)
+  0x00007fed2087db83:   mov    %r12,0x28(%rax)
+  0x00007fed2087db87:   mov    %rax,0x80(%rsp)
+  0x00007fed2087db8f:   mov    0xc(%rbp),%r11d
+  0x00007fed2087db93:   mov    0xf8(%r15),%rax
+  0x00007fed2087db9a:   vmovdqu 0x10(%r12,%r11,8),%ymm0
+  0x00007fed2087dba1:   vfmadd231pd %ymm2,%ymm1,%ymm0
+  0x00007fed2087dba6:   mov    0x80(%rsp),%r10
+  0x00007fed2087dbae:   vmovdqu %ymm0,0x10(%r10)
+  0x00007fed2087dbb4:   mov    %rax,%r10
+  0x00007fed2087dbb7:   add    $0x10,%r10
+  0x00007fed2087dbbb:   cmp    0x108(%r15),%r10
+  0x00007fed2087dbc2:   jb     0x00007fed2087da80
+  0x00007fed2087dbc8:   vmovdqu %ymm0,0xa0(%rsp)
+  0x00007fed2087dbd1:   vmovdqu %ymm2,(%rsp)
+  0x00007fed2087dbd6:   vmovdqu %ymm1,0x20(%rsp)
+  0x00007fed2087dbdc:   movabs $0x801054ea8,%rsi            ;   {metadata('jdk/incubator/vector/Double256Vector')}
+  0x00007fed2087dbe6:   xchg   %ax,%ax
+  0x00007fed2087dbe8:   vzeroupper
+  0x00007fed2087dbeb:   call   0x00007fed203cc400           ; ImmutableOopMap {rbp=Oop [72]=Oop [80]=Oop [88]=Oop [96]=Oop [104]=Oop [128]=Oop }
+                                                            ;*invokestatic ternaryOp {reexecute=1 rethrow=0 return_oop=1}
+                                                            ; - (reexecute) jdk.incubator.vector.DoubleVector::lanewiseTemplate@69 (line 986)
+                                                            ; - jdk.incubator.vector.Double256Vector::lanewise@4 (line 301)
+                                                            ; - jdk.incubator.vector.Double256Vector::lanewise@4 (line 41)
+                                                            ; - jdk.incubator.vector.DoubleVector::fma@6 (line 2451)
+                                                            ; - mtakeshi1.playground.vectorapi.JitWatchTest::innerLoop@3 (line 13)
+                                                            ; - mtakeshi1.playground.vectorapi.JitWatchTest::fmaVector@55 (line 23)
+                                                            ;   {runtime_call _new_instance_Java}
+  0x00007fed2087dbf0:   vmovdqu 0xa0(%rsp),%ymm0
+  0x00007fed2087dbf9:   jmp    0x00007fed2087da9d
+  0x00007fed2087dbfe:   vmovdqu %ymm2,0x20(%rsp)
+  0x00007fed2087dc04:   vmovdqu %ymm1,(%rsp)
+  0x00007fed2087dc09:   movabs $0x800002020,%rsi            ;   {metadata({type array double})}
+  0x00007fed2087dc13:   mov    $0x4,%edx
+  0x00007fed2087dc18:   vzeroupper
+  0x00007fed2087dc1b:   call   0x00007fed203c9f00           ; ImmutableOopMap {rbp=Oop [72]=Oop [80]=Oop [88]=Oop [96]=Oop [104]=Oop }
+                                                            ;*invokestatic ternaryOp {reexecute=1 rethrow=0 return_oop=1}
+                                                            ; - (reexecute) jdk.incubator.vector.DoubleVector::lanewiseTemplate@69 (line 986)
+                                                            ; - jdk.incubator.vector.Double256Vector::lanewise@4 (line 301)
+                                                            ; - jdk.incubator.vector.Double256Vector::lanewise@4 (line 41)
+                                                            ; - jdk.incubator.vector.DoubleVector::fma@6 (line 2451)
+                                                            ; - mtakeshi1.playground.vectorapi.JitWatchTest::innerLoop@3 (line 13)
+                                                            ; - mtakeshi1.playground.vectorapi.JitWatchTest::fmaVector@55 (line 23)
+                                                            ;   {runtime_call _new_array_Java}
+  0x00007fed2087dc20:   vmovdqu (%rsp),%ymm1
+  0x00007fed2087dc25:   vmovdqu 0x20(%rsp),%ymm2
+  0x00007fed2087dc2b:   jmp    0x00007fed2087db87
+  0x00007fed2087dc30:   mov    $0xffffffe4,%esi
+  0x00007fed2087dc35:   mov    0x48(%rsp),%rbp
+  0x00007fed2087dc3a:   rex.W push 0x50(%rsp)
+  0x00007fed2087dc3f:   rex.W pop (%rsp)
+  0x00007fed2087dc43:   mov    %r10,0x18(%rsp)
+  0x00007fed2087dc48:   vzeroupper
+  0x00007fed2087dc4b:   call   0x00007fed20320200           ; ImmutableOopMap {rbp=Oop [0]=Oop [24]=Oop [88]=Oop [96]=Oop [104]=Oop }
+                                                            ;*invokestatic checkIndex {reexecute=0 rethrow=0 return_oop=0}
+                                                            ; - java.util.Objects::checkIndex@3 (line 385)
+                                                            ; - jdk.incubator.vector.VectorIntrinsics::checkFromIndexSize@43 (line 57)
+                                                            ; - jdk.incubator.vector.DoubleVector::fromArray@9 (line 2776)
+                                                            ; - mtakeshi1.playground.vectorapi.JitWatchTest::fmaVector@34 (line 21)
+                                                            ;   {runtime_call UncommonTrapBlob}
+  0x00007fed2087dc50:   mov    $0xffffffe4,%esi
+  0x00007fed2087dc55:   mov    0x48(%rsp),%rbp
+  0x00007fed2087dc5a:   rex.W push 0x50(%rsp)
+  0x00007fed2087dc5f:   rex.W pop (%rsp)
+  0x00007fed2087dc63:   rex.W push 0x58(%rsp)
+  0x00007fed2087dc68:   rex.W pop 0x8(%rsp)
+  0x00007fed2087dc6d:   rex.W push 0x68(%rsp)
+  0x00007fed2087dc72:   rex.W pop 0x10(%rsp)
+  0x00007fed2087dc77:   mov    %rax,-0x8(%rsp)
+  0x00007fed2087dc7c:   mov    0x40(%rsp),%eax
+  0x00007fed2087dc80:   mov    %eax,0x1c(%rsp)
+  0x00007fed2087dc84:   mov    -0x8(%rsp),%rax
+  0x00007fed2087dc89:   mov    %r10,0x20(%rsp)
+  0x00007fed2087dc8e:   mov    %r11d,0x38(%rsp)
+  0x00007fed2087dc93:   vmovdqu %ymm1,0x40(%rsp)
+  0x00007fed2087dc99:   data16 xchg %ax,%ax
+  0x00007fed2087dc9c:   vzeroupper
+  0x00007fed2087dc9f:   call   0x00007fed20320200           ; ImmutableOopMap {rbp=Oop [0]=Oop [8]=Oop [16]=Oop [32]=Oop }
+                                                            ;*invokestatic checkIndex {reexecute=0 rethrow=0 return_oop=0}
+                                                            ; - java.util.Objects::checkIndex@3 (line 385)
+                                                            ; - jdk.incubator.vector.VectorIntrinsics::checkFromIndexSize@43 (line 57)
+                                                            ; - jdk.incubator.vector.DoubleVector::fromArray@9 (line 2776)
+                                                            ; - mtakeshi1.playground.vectorapi.JitWatchTest::fmaVector@43 (line 22)
+                                                            ;   {runtime_call UncommonTrapBlob}
+  0x00007fed2087dca4:   mov    0x28(%rsi),%rdi
+  0x00007fed2087dca8:   mov    (%rdi),%ecx
+  0x00007fed2087dcaa:   add    $0x8,%rdi
+  0x00007fed2087dcae:   test   %rax,%rax
+  0x00007fed2087dcb1:   repnz scas %es:(%rdi),%rax
+  0x00007fed2087dcb4:   jne    0x00007fed2087dcbe
+  0x00007fed2087dcba:   mov    %rax,0x20(%rsi)
+  0x00007fed2087dcbe:   jne    0x00007fed2087dd50
+  0x00007fed2087dcc4:   jmp    0x00007fed2087d9ae
+  0x00007fed2087dcc9:   mov    $0xffffff45,%esi
+  0x00007fed2087dcce:   mov    0x48(%rsp),%rbp
+  0x00007fed2087dcd3:   mov    %rax,-0x8(%rsp)
+  0x00007fed2087dcd8:   mov    0x40(%rsp),%eax
+  0x00007fed2087dcdc:   mov    %eax,0x14(%rsp)
+  0x00007fed2087dce0:   mov    -0x8(%rsp),%rax
+  0x00007fed2087dce5:   mov    %r10,0x18(%rsp)
+  0x00007fed2087dcea:   xchg   %ax,%ax
+  0x00007fed2087dcec:   vzeroupper
+  0x00007fed2087dcef:   call   0x00007fed20320200           ; ImmutableOopMap {rbp=Oop [24]=Oop [80]=Oop [88]=Oop [96]=Oop }
+                                                            ;*if_icmpge {reexecute=1 rethrow=0 return_oop=0}
+                                                            ; - (reexecute) mtakeshi1.playground.vectorapi.JitWatchTest::fmaVector@27 (line 20)
+                                                            ;   {runtime_call UncommonTrapBlob}
+  0x00007fed2087dcf4:   xor    %r8d,%r8d
+  0x00007fed2087dcf7:   mov    %rbp,%rbx
+  0x00007fed2087dcfa:   jmp    0x00007fed2087d93f
+  0x00007fed2087dcff:   xor    %r9d,%r9d
+  0x00007fed2087dd02:   jmp    0x00007fed2087d95c
+  0x00007fed2087dd07:   xor    %edx,%edx
+  0x00007fed2087dd09:   jmp    0x00007fed2087d979
+  0x00007fed2087dd0e:   xor    %r10d,%r10d
+  0x00007fed2087dd11:   jmp    0x00007fed2087d9b1
+  0x00007fed2087dd16:   xor    %ebx,%ebx
+  0x00007fed2087dd18:   jmp    0x00007fed2087d9f8
+  0x00007fed2087dd1d:   mov    $0xffffff76,%esi
+  0x00007fed2087dd22:   mov    %r8,%rbp
+  0x00007fed2087dd25:   mov    %r9,(%rsp)
+  0x00007fed2087dd29:   mov    %rdx,0x8(%rsp)
+  0x00007fed2087dd2e:   mov    %rbx,0x18(%rsp)
+  0x00007fed2087dd33:   mov    %r10,0x20(%rsp)
+  0x00007fed2087dd38:   vzeroupper
+  0x00007fed2087dd3b:   call   0x00007fed20320200           ; ImmutableOopMap {rbp=Oop [0]=Oop [8]=Oop [24]=Oop [32]=Oop }
+                                                            ;*iload {reexecute=0 rethrow=0 return_oop=0}
+                                                            ; - mtakeshi1.playground.vectorapi.JitWatchTest::fmaVector@23 (line 20)
+                                                            ;   {runtime_call UncommonTrapBlob}
+  0x00007fed2087dd40:   mov    (%rsp),%r11
+  0x00007fed2087dd44:   jmp    0x00007fed2087dd50
+  0x00007fed2087dd46:   mov    (%rsp),%r11
+  0x00007fed2087dd4a:   jmp    0x00007fed2087dd50
+  0x00007fed2087dd4c:   mov    (%rsp),%r11
+  0x00007fed2087dd50:   mov    $0xffffff8d,%esi
+  0x00007fed2087dd55:   mov    0x10(%rsp),%ebp
+  0x00007fed2087dd59:   mov    %rbx,0x10(%rsp)
+  0x00007fed2087dd5e:   mov    %r13,0x18(%rsp)
+  0x00007fed2087dd63:   mov    %r14,0x20(%rsp)
+  0x00007fed2087dd68:   mov    %r11,0x28(%rsp)
+  0x00007fed2087dd6d:   data16 xchg %ax,%ax
+  0x00007fed2087dd70:   vzeroupper
+  0x00007fed2087dd73:   call   0x00007fed20320200           ; ImmutableOopMap {[8]=Oop [16]=Oop [24]=Oop [32]=Oop [40]=Oop }
+                                                            ;*iload {reexecute=0 rethrow=0 return_oop=0}
+                                                            ; - mtakeshi1.playground.vectorapi.JitWatchTest::fmaVector@23 (line 20)
+                                                            ;   {runtime_call UncommonTrapBlob}
+  0x00007fed2087dd78:   mov    $0xffffff66,%esi
+  0x00007fed2087dd7d:   movabs $0x800000000,%r11
+  0x00007fed2087dd87:   add    %r8,%r11
+  0x00007fed2087dd8a:   mov    0x70(%r11),%r11
+  0x00007fed2087dd8e:   mov    (%r11),%rbp
+  0x00007fed2087dd91:   rex.W push 0x48(%rsp)
+  0x00007fed2087dd96:   rex.W pop (%rsp)
+  0x00007fed2087dd9a:   rex.W push 0x50(%rsp)
+  0x00007fed2087dd9f:   rex.W pop 0x8(%rsp)
+  0x00007fed2087dda4:   mov    %r9,0x10(%rsp)
+  0x00007fed2087dda9:   rex.W push 0x68(%rsp)
+  0x00007fed2087ddae:   rex.W pop 0x18(%rsp)
+  0x00007fed2087ddb3:   mov    %rax,-0x8(%rsp)
+  0x00007fed2087ddb8:   mov    0x78(%rsp),%eax
+  0x00007fed2087ddbc:   mov    %eax,0x20(%rsp)
+  0x00007fed2087ddc0:   mov    -0x8(%rsp),%rax
+  0x00007fed2087ddc5:   mov    %rax,-0x8(%rsp)
+  0x00007fed2087ddca:   mov    0x40(%rsp),%eax
+  0x00007fed2087ddce:   mov    %eax,0x24(%rsp)
+  0x00007fed2087ddd2:   mov    -0x8(%rsp),%rax
+  0x00007fed2087ddd7:   mov    %r10,0x30(%rsp)
+  0x00007fed2087dddc:   mov    %r10,0x38(%rsp)
+  0x00007fed2087dde1:   vmovdqu %ymm2,0x40(%rsp)
+  0x00007fed2087dde7:   vmovdqu %ymm1,0x60(%rsp)
+  0x00007fed2087dded:   data16 xchg %ax,%ax
+  0x00007fed2087ddf0:   vzeroupper
+  0x00007fed2087ddf3:   call   0x00007fed20320200           ; ImmutableOopMap {rbp=Oop [0]=Oop [8]=Oop [16]=Oop [24]=Oop [48]=Oop [56]=Oop }
+                                                            ;*if_acmpne {reexecute=1 rethrow=0 return_oop=0}
+                                                            ; - (reexecute) jdk.incubator.vector.AbstractVector::sameSpecies@8 (line 139)
+                                                            ; - jdk.incubator.vector.AbstractVector::check@2 (line 130)
+                                                            ; - jdk.incubator.vector.DoubleVector::lanewiseTemplate@22 (line 984)
+                                                            ; - jdk.incubator.vector.Double256Vector::lanewise@4 (line 301)
+                                                            ; - jdk.incubator.vector.Double256Vector::lanewise@4 (line 41)
+                                                            ; - jdk.incubator.vector.DoubleVector::fma@6 (line 2451)
+                                                            ; - mtakeshi1.playground.vectorapi.JitWatchTest::innerLoop@3 (line 13)
+                                                            ; - mtakeshi1.playground.vectorapi.JitWatchTest::fmaVector@55 (line 23)
+                                                            ;   {runtime_call UncommonTrapBlob}
+  0x00007fed2087ddf8:   mov    $0xffffff5e,%esi
+  0x00007fed2087ddfd:   vmovdqu %ymm1,(%rsp)
+  0x00007fed2087de02:   xchg   %ax,%ax
+  0x00007fed2087de04:   vzeroupper
+  0x00007fed2087de07:   call   0x00007fed20320200           ; ImmutableOopMap {}
+                                                            ;*invokevirtual check {reexecute=0 rethrow=0 return_oop=0}
+                                                            ; - jdk.incubator.vector.DoubleVector::lanewiseTemplate@22 (line 984)
+                                                            ; - jdk.incubator.vector.Double256Vector::lanewise@4 (line 301)
+                                                            ; - jdk.incubator.vector.Double256Vector::lanewise@4 (line 41)
+                                                            ; - jdk.incubator.vector.DoubleVector::fma@6 (line 2451)
+                                                            ; - mtakeshi1.playground.vectorapi.JitWatchTest::innerLoop@3 (line 13)
+                                                            ; - mtakeshi1.playground.vectorapi.JitWatchTest::fmaVector@55 (line 23)
+                                                            ;   {runtime_call UncommonTrapBlob}
+  0x00007fed2087de0c:   mov    %rax,%rsi
+  0x00007fed2087de0f:   jmp    0x00007fed2087de14
+  0x00007fed2087de11:   mov    %rax,%rsi
+  0x00007fed2087de14:   vzeroupper
+  0x00007fed2087de17:   add    $0xd0,%rsp
+  0x00007fed2087de1e:   pop    %rbp
+  0x00007fed2087de1f:   jmp    0x00007fed203ccf80           ;   {runtime_call _rethrow_Java}
+  0x00007fed2087de24:   hlt
+  0x00007fed2087de25:   hlt
+  0x00007fed2087de26:   hlt
+  0x00007fed2087de27:   hlt
+  0x00007fed2087de28:   hlt
+  0x00007fed2087de29:   hlt
+  0x00007fed2087de2a:   hlt
+  0x00007fed2087de2b:   hlt
+  0x00007fed2087de2c:   hlt
+  0x00007fed2087de2d:   hlt
+  0x00007fed2087de2e:   hlt
+  0x00007fed2087de2f:   hlt
+  0x00007fed2087de30:   hlt
+  0x00007fed2087de31:   hlt
+  0x00007fed2087de32:   hlt
+  0x00007fed2087de33:   hlt
+  0x00007fed2087de34:   hlt
+  0x00007fed2087de35:   hlt
+  0x00007fed2087de36:   hlt
+  0x00007fed2087de37:   hlt
+  0x00007fed2087de38:   hlt
+  0x00007fed2087de39:   hlt
+  0x00007fed2087de3a:   hlt
+  0x00007fed2087de3b:   hlt
+  0x00007fed2087de3c:   hlt
+  0x00007fed2087de3d:   hlt
+  0x00007fed2087de3e:   hlt
+  0x00007fed2087de3f:   hlt
+[Exception Handler]
+  0x00007fed2087de40:   jmp    0x00007fed203bfa80           ;   {no_reloc}
+[Deopt Handler Code]
+  0x00007fed2087de45:   call   0x00007fed2087de4a
+  0x00007fed2087de4a:   subq   $0x5,(%rsp)
+  0x00007fed2087de4f:   jmp    0x00007fed203205a0           ;   {runtime_call DeoptimizationBlob}
+  0x00007fed2087de54:   hlt
+  0x00007fed2087de55:   hlt
+  0x00007fed2087de56:   hlt
+  0x00007fed2087de57:   hlt
+--------------------------------------------------------------------------------
+[/Disassembly]
+
+============================= C2-compiled nmethod ==============================
+----------------------------------- Assembly -----------------------------------
+
+Compiled method (c2)    1270  488       4       mtakeshi1.playground.vectorapi.JitWatchTest::fmaVector (117 bytes)
+ total in heap  [0x00007fed2087e710,0x00007fed2087ee18] = 1800
+ relocation     [0x00007fed2087e870,0x00007fed2087e888] = 24
+ main code      [0x00007fed2087e8a0,0x00007fed2087ebe0] = 832
+ stub code      [0x00007fed2087ebe0,0x00007fed2087ebf8] = 24
+ oops           [0x00007fed2087ebf8,0x00007fed2087ec10] = 24
+ metadata       [0x00007fed2087ec10,0x00007fed2087ec78] = 104
+ scopes data    [0x00007fed2087ec78,0x00007fed2087ed60] = 232
+ scopes pcs     [0x00007fed2087ed60,0x00007fed2087ede0] = 128
+ dependencies   [0x00007fed2087ede0,0x00007fed2087ee00] = 32
+ nul chk table  [0x00007fed2087ee00,0x00007fed2087ee18] = 24
+
+[Disassembly]
+--------------------------------------------------------------------------------
+[Constant Pool (empty)]
+
+--------------------------------------------------------------------------------
+
+[Entry Point]
+  # {method} {0x00007fecf0407750} 'fmaVector' '([D[D)D' in 'mtakeshi1/playground/vectorapi/JitWatchTest'
+  # this:     rsi:rsi   = 'mtakeshi1/playground/vectorapi/JitWatchTest'
+  # parm0:    rdx:rdx   = '[D'
+  # parm1:    rcx:rcx   = '[D'
+  #           [sp+0x60]  (sp of caller)
+  0x00007fed2087e8a0:   mov    0x8(%rsi),%r10d
+  0x00007fed2087e8a4:   movabs $0x800000000,%r11
+  0x00007fed2087e8ae:   add    %r11,%r10
+  0x00007fed2087e8b1:   cmp    %r10,%rax
+  0x00007fed2087e8b4:   jne    0x00007fed2031ac80           ;   {runtime_call ic_miss_stub}
+  0x00007fed2087e8ba:   xchg   %ax,%ax
+  0x00007fed2087e8bc:   nopl   0x0(%rax)
+[Verified Entry Point]
+  0x00007fed2087e8c0:   mov    %eax,-0x14000(%rsp)
+  0x00007fed2087e8c7:   push   %rbp
+  0x00007fed2087e8c8:   sub    $0x50,%rsp
+  0x00007fed2087e8cc:   mov    %rsi,%r10
+  0x00007fed2087e8cf:   mov    0xc(%rdx),%r9d               ; implicit exception: dispatches to 0x00007fed2087ebc8
+  0x00007fed2087e8d3:   mov    %r9d,%r11d
+  0x00007fed2087e8d6:   and    $0xfffffffc,%r11d
+  0x00007fed2087e8da:   vpxor  %ymm2,%ymm2,%ymm2
+  0x00007fed2087e8de:   test   %r11d,%r11d
+  0x00007fed2087e8e1:   jle    0x00007fed2087eba3
+  0x00007fed2087e8e7:   mov    %r9d,%r8d
+  0x00007fed2087e8ea:   add    $0xfffffffd,%r8d
+  0x00007fed2087e8ee:   test   %r8d,%r8d
+  0x00007fed2087e8f1:   jl     0x00007fed2087eb54
+  0x00007fed2087e8f7:   cmp    $0x3,%r9d
+  0x00007fed2087e8fb:   je     0x00007fed2087eb54
+  0x00007fed2087e901:   movslq %r9d,%r8
+  0x00007fed2087e904:   movslq %r11d,%r9
+  0x00007fed2087e907:   add    $0xfffffffffffffffd,%r8
+  0x00007fed2087e90b:   add    $0x3,%r9
+  0x00007fed2087e90f:   and    $0xfffffffffffffffc,%r9
+  0x00007fed2087e913:   mov    %r9d,%ebx
+  0x00007fed2087e916:   movslq %ebx,%r9
+  0x00007fed2087e919:   add    $0xfffffffffffffffc,%r9
+  0x00007fed2087e91d:   cmp    %r8,%r9
+  0x00007fed2087e920:   jae    0x00007fed2087eb54
+  0x00007fed2087e926:   mov    0xc(%rcx),%r8d               ; implicit exception: dispatches to 0x00007fed2087eb54
+  0x00007fed2087e92a:   mov    %r8d,%edi
+  0x00007fed2087e92d:   add    $0xfffffffd,%edi
+  0x00007fed2087e930:   test   %edi,%edi
+  0x00007fed2087e932:   jl     0x00007fed2087eb54
+  0x00007fed2087e938:   cmp    $0x3,%r8d
+  0x00007fed2087e93c:   je     0x00007fed2087eb54
+  0x00007fed2087e942:   movslq %r8d,%r8
+  0x00007fed2087e945:   add    $0xfffffffffffffffd,%r8
+  0x00007fed2087e949:   cmp    %r8,%r9
+  0x00007fed2087e94c:   jae    0x00007fed2087eb54
+  0x00007fed2087e952:   cmp    $0x7ffffffc,%r11d
+  0x00007fed2087e959:   jg     0x00007fed2087eb78
+  0x00007fed2087e95f:   vmovdqu 0x10(%rcx),%ymm0
+  0x00007fed2087e964:   vmovdqu 0x10(%rdx),%ymm1
+  0x00007fed2087e969:   vfmadd231pd %ymm0,%ymm1,%ymm2
+  0x00007fed2087e96e:   mov    %r11d,%r9d
+  0x00007fed2087e971:   add    $0xffffffc4,%r9d
+  0x00007fed2087e975:   mov    $0x4,%r8d
+  0x00007fed2087e97b:   mov    $0x80000000,%ebx
+  0x00007fed2087e980:   cmp    %r9d,%r11d
+  0x00007fed2087e983:   cmovl  %ebx,%r9d
+  0x00007fed2087e987:   cmp    $0x4,%r9d
+  0x00007fed2087e98b:   jle    0x00007fed2087eb0a
+  0x00007fed2087e991:   mov    $0xfa00,%ebx
+  0x00007fed2087e996:   xor    %esi,%esi
+  0x00007fed2087e998:   jmp    0x00007fed2087e9ac
+  0x00007fed2087e99a:   mov    0x380(%r15),%rdi             ; ImmutableOopMap {r10=Oop rcx=Oop rdx=Oop }
+                                                            ;*goto {reexecute=1 rethrow=0 return_oop=0}
+                                                            ; - (reexecute) mtakeshi1.playground.vectorapi.JitWatchTest::fmaVector@71 (line 20)
+  0x00007fed2087e9a1:   test   %eax,(%rdi)                  ;   {poll}
+  0x00007fed2087e9a3:   cmp    %r9d,%r8d
+  0x00007fed2087e9a6:   jge    0x00007fed2087eb0a
+  0x00007fed2087e9ac:   mov    %r9d,%edi
+  0x00007fed2087e9af:   sub    %r8d,%edi
+  0x00007fed2087e9b2:   cmp    %r8d,%r9d
+  0x00007fed2087e9b5:   cmovl  %esi,%edi
+  0x00007fed2087e9b8:   cmp    $0xfa00,%edi
+  0x00007fed2087e9be:   cmova  %ebx,%edi
+  0x00007fed2087e9c1:   add    %r8d,%edi
+  0x00007fed2087e9c4:   nopw   0x0(%rax,%rax,1)
+  0x00007fed2087e9ca:   nopw   0x0(%rax,%rax,1)
+  0x00007fed2087e9d0:   vmovdqu 0x1f0(%rdx,%r8,8),%ymm1
+  0x00007fed2087e9da:   vmovdqu 0x1d0(%rdx,%r8,8),%ymm3
+  0x00007fed2087e9e4:   vmovdqu 0x10(%rdx,%r8,8),%ymm0
+  0x00007fed2087e9eb:   vfmadd231pd 0x10(%rcx,%r8,8),%ymm0,%ymm2
+  0x00007fed2087e9f2:   vmovdqu 0x30(%rdx,%r8,8),%ymm0
+  0x00007fed2087e9f9:   vfmadd231pd 0x30(%rcx,%r8,8),%ymm0,%ymm2
+  0x00007fed2087ea00:   vmovdqu 0x50(%rdx,%r8,8),%ymm0
+  0x00007fed2087ea07:   vfmadd231pd 0x50(%rcx,%r8,8),%ymm0,%ymm2
+  0x00007fed2087ea0e:   vmovdqu 0x70(%rdx,%r8,8),%ymm0
+  0x00007fed2087ea15:   vfmadd231pd 0x70(%rcx,%r8,8),%ymm0,%ymm2
+  0x00007fed2087ea1c:   vmovdqu 0x90(%rdx,%r8,8),%ymm0
+  0x00007fed2087ea26:   vfmadd231pd 0x90(%rcx,%r8,8),%ymm0,%ymm2
+  0x00007fed2087ea30:   vmovdqu 0xb0(%rdx,%r8,8),%ymm0
+  0x00007fed2087ea3a:   vfmadd231pd 0xb0(%rcx,%r8,8),%ymm0,%ymm2
+  0x00007fed2087ea44:   vmovdqu 0xd0(%rdx,%r8,8),%ymm0
+  0x00007fed2087ea4e:   vfmadd231pd 0xd0(%rcx,%r8,8),%ymm0,%ymm2
+  0x00007fed2087ea58:   vmovdqu 0xf0(%rdx,%r8,8),%ymm0
+  0x00007fed2087ea62:   vfmadd231pd 0xf0(%rcx,%r8,8),%ymm0,%ymm2
+  0x00007fed2087ea6c:   vmovdqu 0x110(%rdx,%r8,8),%ymm0
+  0x00007fed2087ea76:   vfmadd231pd 0x110(%rcx,%r8,8),%ymm0,%ymm2
+  0x00007fed2087ea80:   vmovdqu 0x130(%rdx,%r8,8),%ymm0
+  0x00007fed2087ea8a:   vfmadd231pd 0x130(%rcx,%r8,8),%ymm0,%ymm2
+  0x00007fed2087ea94:   vmovdqu 0x150(%rdx,%r8,8),%ymm0
+  0x00007fed2087ea9e:   vfmadd231pd 0x150(%rcx,%r8,8),%ymm0,%ymm2
+  0x00007fed2087eaa8:   vmovdqu 0x170(%rdx,%r8,8),%ymm0
+  0x00007fed2087eab2:   vfmadd231pd 0x170(%rcx,%r8,8),%ymm0,%ymm2
+  0x00007fed2087eabc:   vmovdqu 0x190(%rdx,%r8,8),%ymm0
+  0x00007fed2087eac6:   vfmadd231pd 0x190(%rcx,%r8,8),%ymm0,%ymm2
+  0x00007fed2087ead0:   vmovdqu 0x1b0(%rdx,%r8,8),%ymm0
+  0x00007fed2087eada:   vfmadd231pd 0x1b0(%rcx,%r8,8),%ymm0,%ymm2
+  0x00007fed2087eae4:   vfmadd231pd 0x1d0(%rcx,%r8,8),%ymm3,%ymm2
+  0x00007fed2087eaee:   vfmadd231pd 0x1f0(%rcx,%r8,8),%ymm1,%ymm2
+  0x00007fed2087eaf8:   add    $0x40,%r8d
+  0x00007fed2087eafc:   cmp    %edi,%r8d
+  0x00007fed2087eaff:   jl     0x00007fed2087e9d0
+  0x00007fed2087eb05:   jmp    0x00007fed2087e99a
+  0x00007fed2087eb0a:   cmp    %r11d,%r8d
+  0x00007fed2087eb0d:   jge    0x00007fed2087eb9c
+  0x00007fed2087eb13:   nop
+  0x00007fed2087eb14:   vmovdqu 0x10(%rdx,%r8,8),%ymm0
+  0x00007fed2087eb1b:   vfmadd231pd 0x10(%rcx,%r8,8),%ymm0,%ymm2
+  0x00007fed2087eb22:   add    $0x4,%r8d
+  0x00007fed2087eb26:   cmp    %r11d,%r8d
+  0x00007fed2087eb29:   jl     0x00007fed2087eb14
+  0x00007fed2087eb2b:   vmovdqu %ymm2,(%rsp)
+  0x00007fed2087eb30:   mov    $0xffffff45,%esi
+  0x00007fed2087eb35:   mov    %r10,%rbp
+  0x00007fed2087eb38:   mov    %rdx,0x20(%rsp)
+  0x00007fed2087eb3d:   mov    %rcx,0x28(%rsp)
+  0x00007fed2087eb42:   mov    %r8d,0x38(%rsp)
+  0x00007fed2087eb47:   mov    %r11d,0x3c(%rsp)
+  0x00007fed2087eb4c:   vzeroupper
+  0x00007fed2087eb4f:   call   0x00007fed20320200           ; ImmutableOopMap {rbp=Oop [32]=Oop [40]=Oop }
+                                                            ;*if_icmpge {reexecute=1 rethrow=0 return_oop=0}
+                                                            ; - (reexecute) mtakeshi1.playground.vectorapi.JitWatchTest::fmaVector@27 (line 20)
+                                                            ;   {runtime_call UncommonTrapBlob}
+  0x00007fed2087eb54:   mov    $0xffffff76,%esi
+  0x00007fed2087eb59:   mov    %r10,%rbp
+  0x00007fed2087eb5c:   mov    %rdx,(%rsp)
+  0x00007fed2087eb60:   mov    %rcx,0x8(%rsp)
+  0x00007fed2087eb65:   mov    %r11d,0x14(%rsp)
+  0x00007fed2087eb6a:   vmovdqu %ymm2,0x20(%rsp)
+  0x00007fed2087eb70:   vzeroupper
+  0x00007fed2087eb73:   call   0x00007fed20320200           ; ImmutableOopMap {rbp=Oop [0]=Oop [8]=Oop }
+                                                            ;*if_icmpge {reexecute=1 rethrow=0 return_oop=0}
+                                                            ; - (reexecute) mtakeshi1.playground.vectorapi.JitWatchTest::fmaVector@27 (line 20)
+                                                            ;   {runtime_call UncommonTrapBlob}
+  0x00007fed2087eb78:   mov    $0xffffff6e,%esi
+  0x00007fed2087eb7d:   mov    %r10,%rbp
+  0x00007fed2087eb80:   mov    %rdx,(%rsp)
+  0x00007fed2087eb84:   mov    %rcx,0x8(%rsp)
+  0x00007fed2087eb89:   mov    %r11d,0x14(%rsp)
+  0x00007fed2087eb8e:   vmovdqu %ymm2,0x20(%rsp)
+  0x00007fed2087eb94:   vzeroupper
+  0x00007fed2087eb97:   call   0x00007fed20320200           ; ImmutableOopMap {rbp=Oop [0]=Oop [8]=Oop }
+                                                            ;*if_icmpge {reexecute=1 rethrow=0 return_oop=0}
+                                                            ; - (reexecute) mtakeshi1.playground.vectorapi.JitWatchTest::fmaVector@27 (line 20)
+                                                            ;   {runtime_call UncommonTrapBlob}
+  0x00007fed2087eb9c:   vmovdqu %ymm2,(%rsp)
+  0x00007fed2087eba1:   jmp    0x00007fed2087eb30
+  0x00007fed2087eba3:   mov    $0xffffff45,%esi
+  0x00007fed2087eba8:   mov    %r10,%rbp
+  0x00007fed2087ebab:   mov    %rdx,(%rsp)
+  0x00007fed2087ebaf:   mov    %rcx,0x8(%rsp)
+  0x00007fed2087ebb4:   mov    %r11d,0x14(%rsp)
+  0x00007fed2087ebb9:   vmovdqu %ymm2,0x20(%rsp)
+  0x00007fed2087ebbf:   nop
+  0x00007fed2087ebc0:   vzeroupper
+  0x00007fed2087ebc3:   call   0x00007fed20320200           ; ImmutableOopMap {rbp=Oop [0]=Oop [8]=Oop }
+                                                            ;*if_icmpge {reexecute=1 rethrow=0 return_oop=0}
+                                                            ; - (reexecute) mtakeshi1.playground.vectorapi.JitWatchTest::fmaVector@27 (line 20)
+                                                            ;   {runtime_call UncommonTrapBlob}
+  0x00007fed2087ebc8:   mov    $0xfffffff6,%esi
+  0x00007fed2087ebcd:   data16 xchg %ax,%ax
+  0x00007fed2087ebd0:   vzeroupper
+  0x00007fed2087ebd3:   call   0x00007fed20320200           ; ImmutableOopMap {}
+                                                            ;*arraylength {reexecute=0 rethrow=0 return_oop=0}
+                                                            ; - mtakeshi1.playground.vectorapi.JitWatchTest::fmaVector@9 (line 18)
+                                                            ;   {runtime_call UncommonTrapBlob}
+  0x00007fed2087ebd8:   hlt
+  0x00007fed2087ebd9:   hlt
+  0x00007fed2087ebda:   hlt
+  0x00007fed2087ebdb:   hlt
+  0x00007fed2087ebdc:   hlt
+  0x00007fed2087ebdd:   hlt
+  0x00007fed2087ebde:   hlt
+  0x00007fed2087ebdf:   hlt
+[Exception Handler]
+  0x00007fed2087ebe0:   jmp    0x00007fed203bfa80           ;   {no_reloc}
+[Deopt Handler Code]
+  0x00007fed2087ebe5:   call   0x00007fed2087ebea
+  0x00007fed2087ebea:   subq   $0x5,(%rsp)
+  0x00007fed2087ebef:   jmp    0x00007fed203205a0           ;   {runtime_call DeoptimizationBlob}
+  0x00007fed2087ebf4:   hlt
+  0x00007fed2087ebf5:   hlt
+  0x00007fed2087ebf6:   hlt
+  0x00007fed2087ebf7:   hlt
+--------------------------------------------------------------------------------
+[/Disassembly]
+6136.7603001749685
+6136.7603001749685
+6136.7603001749685
+6136.7603001749685
+6136.7603001749685
+6136.7603001749685
+6136.7603001749685
+6136.7603001749685
+6136.7603001749685
+6136.7603001749685
+
+Process finished with exit code 0
