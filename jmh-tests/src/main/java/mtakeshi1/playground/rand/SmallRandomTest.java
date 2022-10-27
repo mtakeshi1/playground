@@ -11,6 +11,7 @@ import org.openjdk.jmh.runner.options.OptionsBuilder;
 
 import java.security.SecureRandom;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 
 @Measurement(timeUnit = TimeUnit.NANOSECONDS)
@@ -18,7 +19,7 @@ import java.util.concurrent.TimeUnit;
 public class SmallRandomTest {
 
     private static final Random rand = new Random();
-    private static final SecureRandom secure = new SecureRandom();
+    private static final ThreadLocalRandom secure = ThreadLocalRandom.current();
 
     @Benchmark
     public void regularRandom(Blackhole blackhole) {
@@ -27,7 +28,7 @@ public class SmallRandomTest {
     }
 
     @Benchmark
-    public void secureRandom(Blackhole blackhole) {
+    public void threadLocalRandom(Blackhole blackhole) {
         blackhole.consume(secure.nextInt());
         blackhole.consume(secure.nextDouble());
 
