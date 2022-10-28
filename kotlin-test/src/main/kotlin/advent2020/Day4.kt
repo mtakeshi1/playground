@@ -1,6 +1,5 @@
 package advent2020
 
-import java.util.stream.Collector
 import java.util.stream.Collectors
 
 object Day4 {
@@ -63,10 +62,10 @@ object Day4 {
                 "iyr" -> pair.second.matches("[0-9]{4}".toRegex()) && Integer.parseInt(pair.second) in 2010..2020
                 "eyr" -> pair.second.matches("[0-9]{4}".toRegex()) && Integer.parseInt(pair.second) in 2020..2030
                 "hgt" -> {
-                    val m = "([0-9])+(in|cm)".toRegex().matchEntire(pair.second)
+                    val m = "([0-9]+)(in|cm)".toRegex().matchEntire(pair.second)
                     if(m != null) {
-                        if(m.groupValues[1] == "in") Integer.parseInt(m.groupValues[0]) in 150..193
-                        else if(m.groupValues[2] == "cm") Integer.parseInt(m.groupValues[0]) in 59..76
+                        if(m.groupValues[2].equals("cm")) Integer.parseInt(m.groupValues[1]) in 150..193
+                        else if(m.groupValues[2].equals("in")) Integer.parseInt(m.groupValues[1]) in 59..76
                         else false
                     } else false;
                 }
@@ -82,31 +81,41 @@ object Day4 {
 
     fun fieldsValid(entry: List<Pair<String, String>>): Boolean = entry.all { validField(it) }
 
+    fun allValid(entry: List<Pair<String, String>>): Boolean = valid(entry) && fieldsValid(entry)
+
 }
 fun main() {
     val entry = """
-        ecl:gry pid:860033327 eyr:2020 hcl:#fffffd
-        byr:1937 iyr:2017 cid:147 hgt:183cm
+        pid:087499704 hgt:74in ecl:grn iyr:2012 eyr:2030 byr:1980
+        hcl:#623a2f
 
-        iyr:2013 ecl:amb cid:350 eyr:2023 pid:028048884
-        hcl:#cfa07d byr:1929
+        eyr:2029 ecl:blu cid:129 byr:1989
+        iyr:2014 pid:896056539 hcl:#a97842 hgt:165cm
 
-        hcl:#ae17e1 iyr:2013
-        eyr:2024
-        ecl:brn pid:760753108 byr:1931
-        hgt:179cm
+        hcl:#888785
+        hgt:164cm byr:2001 iyr:2015 cid:88
+        pid:545766238 ecl:hzl
+        eyr:2022
 
-        hcl:#cfa07d eyr:2025 pid:166559648
-        iyr:2011 ecl:brn hgt:59in
+        iyr:2010 hgt:158cm hcl:#b6652a ecl:blu byr:1944 eyr:2021 pid:093154719
     """.trimIndent()
     fun parse(input: String): List<List<Pair<String, String>>> = input.split("\n\n").map { it.replace('\n', ' ').split(" ")}.map { Day4.toFields(it) }
 
-//    println(parse(entry).count { Day4.valid(it)})
+    parse(entry).stream().forEach { entry ->
+        entry.forEach{ pair ->
+            if(!Day4.validField(pair)) {
+                println("wtf? $pair")
+            }
+        }
+    }
+
+
+    println(parse(entry).count { Day4.valid(it)})
     assert(!Day4.valid(listOf(Pair("byr", "a"), Pair("ecl", "a"), Pair("hcl", "a"), Pair("hgt", "a"), Pair("iyr", "a"), Pair("pid", "a"))))
     val input = Help.read("2020/day4.txt").collect(Collectors.joining("\n"))
     val parsed = parse(input)
     println(parsed.count { Day4.valid(it)})
-    println(parsed.count { Day4.fieldsValid(it)})
+    println(parsed.count { Day4.valid(it) && Day4.fieldsValid(it)})
 
 
 }

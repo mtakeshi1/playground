@@ -197,22 +197,27 @@ public class VectorMonteCarlo {
                     );
         };
 
-        long tic = System.currentTimeMillis();
-        var statistics = evaluateStatistics(dimension, sampleShifts(dimension, sampleSize), boost, f);
+//        long tic = System.currentTimeMillis();
+        double anything = 0.0;
+        for(int i = 0; i < 5000; i++) {
+            var statistics = evaluateStatistics(dimension, sampleShifts(dimension, sampleSize), boost, f);
+            anything += statistics.avg + statistics.variance;
+        }
+        System.out.println(anything);
 
-        System.out.printf("""
-                Avg: %f
-                Variance: %f
-                Confident Interval 95%%: [%s; %s]
-                                 Length: %f 
-                
-                Elapsed Time: %d
-                """,
-                statistics.avg(), statistics.variance(),
-                statistics.confidentInterval95().min(), statistics.confidentInterval95().max(),
-                statistics.confidentInterval95.length(),
-                (System.currentTimeMillis() - tic)
-        );
+//        System.out.printf("""
+//                Avg: %f
+//                Variance: %f
+//                Confident Interval 95%%: [%s; %s]
+//                                 Length: %f
+//
+//                Elapsed Time: %d
+//                """,
+//                statistics.avg(), statistics.variance(),
+//                statistics.confidentInterval95().min(), statistics.confidentInterval95().max(),
+//                statistics.confidentInterval95.length(),
+//                (System.currentTimeMillis() - tic)
+//        );
     }
 
 }
