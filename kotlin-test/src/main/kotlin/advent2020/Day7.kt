@@ -93,7 +93,7 @@ object Day7 {
         if (visited.contains(from)) return 0
         visited.add(from)
         var c = 0
-        graph.getOrDefault(from, listOf()).forEach { pair ->
+        graph[from]?.forEach { pair ->
             c += pair.first * (1 + visitB(pair.second, graph, visited))
         }
         return c
