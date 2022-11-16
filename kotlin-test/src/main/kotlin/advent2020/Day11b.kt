@@ -2,7 +2,7 @@ package advent2020
 
 import java.lang.RuntimeException
 
-object Day11 : Solver {
+object Day11b : Solver {
 
     enum class State(val c: Char) {
         FLOOR('.'), EMPTY('L'), OCCUPIED('#');
@@ -26,22 +26,31 @@ object Day11 : Solver {
 
     }
 
-    fun adjacent(input: List<List<State>>, row: Int, col: Int): List<State> {
-        fun valid(x: Int, y: Int): Boolean = x >= 0 && x < input.size && y >= 0 && y < input[0].size
-
-        val indices = listOf(-1, 0, 1)
-            .flatMap { x -> listOf(-1, 0, 1).map { Pair(x + row, it + col) } }
-            .filter { it.first != row || it.second != col }
-            .filter { valid(it.first, it.second) }
-        return indices.map { input[it.first][it.second] }
+    fun countOccupied(input: List<List<State>>, row: Int, col: Int, direction: Pair<Int, Int>): Int {
+        if (row < 0 || row >= input.size || col < 0 || col >= input[row].size) return 0
+        return when (input[row][col]) {
+            State.OCCUPIED -> 1
+            State.EMPTY -> 0
+            else -> countOccupied(input, row + direction.first, col + direction.second, direction)
+        }
     }
+
+    fun countOccupied(input: List<List<State>>, row: Int, col: Int): Int {
+        val directions = listOf(
+            Pair(-1, -1), Pair(-1, 0), Pair(-1, 1),
+            Pair(0, -1),               Pair(0, 1),
+            Pair(1, -1), Pair(1, 0), Pair(1, 1)
+        )
+        return directions.map { countOccupied(input, row+it.first, col+it.second, it) }.sum()
+    }
+
 
     fun nextState(input: List<List<State>>, row: Int, col: Int): State {
         val current = input[row][col]
-        val neigh = adjacent(input, row, col)
+        val occ = countOccupied(input, row, col)
         return when (current) {
-            State.EMPTY -> if (neigh.none { it == State.OCCUPIED }) State.OCCUPIED else State.EMPTY
-            State.OCCUPIED -> if (neigh.count { it == State.OCCUPIED } >= 4) State.EMPTY else State.OCCUPIED
+            State.EMPTY -> if (occ == 0) State.OCCUPIED else State.EMPTY
+            State.OCCUPIED -> if (occ >= 5) State.EMPTY else State.OCCUPIED
             else -> current
         }
     }
@@ -65,8 +74,8 @@ object Day11 : Solver {
 //        println("-----------------------------------------")
         var next = nextState(state)
         while (next != state) {
-//            println("-----------------------------------------")
-//            println(format(next))
+            println("-----------------------------------------")
+            println(format(next))
             state = next
             next = nextState(next)
         }
@@ -84,22 +93,33 @@ object Day11 : Solver {
 }
 
 fun main() {
-    println(
-        Day11.solve(
-            """
-        L.LL.LL.LL
-        LLLLLLL.LL
-        L.L.L..L..
-        LLLL.LL.LL
-        L.LL.LL.LL
-        L.LLLLL.LL
-        ..L.L.....
-        LLLLLLLLLL
-        L.LLLLLL.L
-        L.LLLLL.LL
-    """.trimIndent()
-        )
-    )
+//    println(
+//        Day11b.solve("""
+//        L.LL.LL.LL
+//        LLLLLLL.LL
+//        L.L.L..L..
+//        LLLL.LL.LL
+//        L.LL.LL.LL
+//        L.LLLLL.LL
+//        ..L.L.....
+//        LLLLLLLLLL
+//        L.LLLLLL.L
+//        L.LLLLL.LL
+//    """.trimIndent()
+//        )
+//    )
 
-    println(Day11.solve("day11.txt"))
+    println(Day11b.solve("""
+        .......#.
+        ...#.....
+        .#.......
+        .........
+        ..#L....#
+        ....#....
+        .........
+        #........
+        ...#.....
+    """.trimIndent()))
+
+    println(Day11b.solve("day11.txt"))
 }
