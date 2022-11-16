@@ -1,86 +1,68 @@
 package advent2020
 
-import java.util.*
-import kotlin.collections.ArrayList
-
 object Day10 {
 
-    data class Node(val jolts: Int, val next: Node?) {
-        constructor(j: Int): this(j, null)
-        fun preprend(v: Int): Node = Node(v, this)
+    fun prepare(list: Iterable<String>): List<Int> {
+        val intList = list.map { Integer.parseInt(it) }.sorted()
+        println(intList.size == list.toSet().size) // no repeats
+        return intList
+    }
 
-        fun toList(l: MutableList<Int> = ArrayList()): List<Int> {
-            l.add(jolts)
-            if(next == null) {
-                return l
+    fun partB(input: List<Int>): Long {
+        return solveB(0, 0, input)
+    }
+
+    fun isValid(prev: Int, input: List<Int>): Boolean {
+        var last = prev;
+        for(v in input) {
+            if(v > last + 3) return false
+            last = v
+        }
+        return true;
+    }
+
+    fun allCombinations(prev: Int, input: List<Int>, visited: MutableSet<List<Int>> = HashSet()): Collection<List<Int>> {
+        if(input.isNotEmpty() && isValid(prev, input) && visited.add(input)) {
+            for(v in input) {
+                if(v != input.last()) {
+                    val copy = input.filter { it != v }
+                    allCombinations(prev, copy, visited)
+                }
             }
-            return next.toList(l)
         }
-
+        return visited
     }
 
-    fun findCombination(inputs: List<Int>, last: Int = 0, acc: Node? = Node(0)): Node? {
-        val next = inputs.filter { j -> last in j-3..j }
-        next.forEach { j ->
-            val filtered = inputs.minus(j)
-            val nacc = Node(j, acc)
-            if(filtered.isEmpty()) {
-                return nacc
+    fun solveB(prev: Int, from: Int, input: List<Int>, memory: MutableMap<Int, Long> = HashMap()): Long {
+        if (from + 1 >= input.size) {
+            return 1L
+        }
+        val cached = memory[from]
+        if (cached != null) return cached
+        val next = input[from + 1]
+        if (next <= prev + 3) {
+            val nextR = solveB(input[from], from + 1, input, memory)
+            val nextNextR = solveB(prev, from + 1, input, memory)
+            var repeated = 0L
+            if(from + 2 < input.size && input[from+2] <= prev + 3) {
+                repeated = solveB(prev, from+2, input, memory)
             }
-            val nn = findCombination(filtered, j, nacc)
-            if(nn != null) {
-                return nn
-            }
+            memory[from] = nextR + nextNextR - repeated
+            return nextR + nextNextR - repeated;
+        } else {
+            val nextR = solveB(input[from], from + 1, input, memory)
+            memory[from] = nextR
+            return nextR;
         }
-        return null
     }
 
-    fun collect(n: Node?, results: Array<Int> = Array(4){if(it == 3) 1 else 0}): Array<Int> {
-        if(n?.next == null) {
-            return results
-        }
-        val diff = Math.abs(n.jolts - n.next.jolts)
-        results[diff]++
-        return collect(n.next, results)
-    }
-
-    fun resolveA(input: List<String>): Int {
-        val r = findCombination(input.map { Integer.parseInt(it) })
-        val rr = collect(r)
-        return rr[1] * rr[3]
-    }
-
-    fun resolveA2(input: List<String>): Int {
-        val ll = input.map { Integer.parseInt(it) }.sorted()
-        val results =Array(4){if(it == 3) 1 else 0}
-        var last = 0
-        for (i in ll) {
-            val diff = Math.abs(last - i)
-            results[diff]++
-            last = i
-        }
-        return results[1] * results[3]
-    }
 
 }
 
 fun main() {
-    val sample = """
-        16
-        10
-        15
-        5
-        1
-        11
-        7
-        19
-        6
-        12
-        4
-    """.trimIndent().split("\n")
-    println(Day10.resolveA2(sample))
+    val list = Help.read("2020/day10.txt").toList()
 
-    val sample2 = """
+    val sample = """
         28
         33
         18
@@ -113,8 +95,9 @@ fun main() {
         10
         3
     """.trimIndent().split("\n")
-    println(Day10.resolveA2(sample2))
 
-    println(Day10.resolveA2(Help.read("2020/day10.txt").toList()))
+//    println(Day10.partB(listOf(1, 2, 3, 4)))
+        println(Day10.allCombinations(0, listOf(1, 2, 3, 4)))
+//    println(Day10.partB(Day10.prepare(sample)))
 
 }
