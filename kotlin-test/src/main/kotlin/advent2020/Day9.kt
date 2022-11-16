@@ -21,7 +21,8 @@ object Day9 {
             val selectedSet = input.slice(i..j)
             val sumRange = selectedSet.sum()
             if(sumRange == toSearch) {
-                return selectedSet.min() + selectedSet.max()
+//                return selectedSet.min() + selectedSet.max()
+                return 1
             } else if(sumRange < toSearch) {
                 j++
             } else {
