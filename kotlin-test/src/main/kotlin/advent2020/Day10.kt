@@ -33,6 +33,15 @@ object Day10 {
         return visited
     }
 
+    fun allCombinations2(prev: Int, input: List<Int>, cache: MutableMap<Int, Long> = HashMap()): Long {
+        if(input.isEmpty()) return 0
+        else if(input.size == 1) return 1
+        else if(input[0] - prev <= 3) {
+
+            return 1
+        } else return 0
+    }
+
     fun solveB(prev: Int, from: Int, input: List<Int>, memory: MutableMap<Int, Long> = HashMap()): Long {
         if (from + 1 >= input.size) {
             return 1L
