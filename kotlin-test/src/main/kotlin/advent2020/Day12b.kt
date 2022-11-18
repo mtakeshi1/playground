@@ -4,19 +4,12 @@ import kotlin.math.abs
 
 object Day12b : Solver {
 
-    val north = Pair(1, 0)
-    val east = Pair(0, 1)
-    val south = Pair(-1, 0)
-    val west = Pair(0, -1)
-
-    val directions = listOf(north, east, south, west)
-
     data class State(val x: Int, val y: Int, val waypoint: Pair<Int, Int> = Pair(1, 10)) {
-        fun north(amount: Int) = State(x, y, waypoint.copy(first = waypoint.first + amount))
-        fun south(amount: Int) = State(x, y, waypoint.copy(first = waypoint.first - amount))
-        fun east(amount: Int) = State(x, y, waypoint.copy(first = waypoint.second + amount))
-        fun west(amount: Int) = State(x, y, waypoint.copy(first = waypoint.second - amount))
-        fun fwd(amount: Int) = State(x + waypoint.first * amount, y + waypoint.second * amount, waypoint)
+        fun north(amount: Int) = copy(waypoint = waypoint.copy(first = waypoint.first + amount))
+        fun south(amount: Int) = copy(waypoint = waypoint.copy(first = waypoint.first - amount))
+        fun east(amount: Int) = copy(waypoint = waypoint.copy(second = waypoint.second + amount))
+        fun west(amount: Int) = copy(waypoint = waypoint.copy(second = waypoint.second - amount))
+        fun fwd(amount: Int) = copy(x = x + waypoint.first * amount, y = y + waypoint.second * amount)
         fun rotateR() = this.copy(waypoint = Pair(-waypoint.second, waypoint.first))
         fun rotateL() = this.copy(waypoint = Pair(waypoint.second, -waypoint.first))
     }
@@ -30,8 +23,8 @@ object Day12b : Solver {
                 'E' -> state.east(amount)
                 'W' -> state.west(amount)
                 'F' -> state.fwd(amount)
-                'R' -> (0 until amount/90).fold(state) {s, _ -> s.rotateR()}
-                'L' -> (0 until amount/90).fold(state) {s, _ -> s.rotateL()}
+                'R' -> (0 until amount / 90).fold(state) { s, _ -> s.rotateR() }
+                'L' -> (0 until amount / 90).fold(state) { s, _ -> s.rotateL() }
                 else -> TODO()
             }
         }
@@ -60,6 +53,6 @@ fun main() {
         )
     )
 
-//    println(Day12b.solve("day12.txt"))
+    println(Day12b.solve("day12.txt"))
 
 }
