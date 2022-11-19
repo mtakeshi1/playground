@@ -20,7 +20,7 @@ interface Solver {
         return solveb(input.split("\n").toList())
     }
 
-    fun solveb(input: List<String>): Any = solveI(input.map { Integer.parseInt(it) })
+    fun solveb(input: List<String>): Any = solveIb(input.map { Integer.parseInt(it) })
     fun solveIb(input: List<Int>): Any = TODO()
 
     fun solve(input: String): Any {
