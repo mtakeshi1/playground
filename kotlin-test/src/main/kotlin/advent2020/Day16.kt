@@ -1,5 +1,7 @@
 package advent2020
 
+import java.lang.RuntimeException
+
 object Day16 : Solver {
 
     data class Field(val name: String, val ranges: List<Pair<Int, Int>>) {
@@ -25,27 +27,57 @@ object Day16 : Solver {
         val otherTickets = input.drop(fields.size).drop(5).map { it.split(",").map { p -> p.toInt() } }
         return otherTickets.flatMap { ticket ->
             ticket.filter { fieldValue -> fields.none { it.match(fieldValue) } }
-        }.sum()
+        }.map { println(it); it }.sum()
+    }
+
+    fun noneMatch(fields: List<Field>, values: List<Int>): Boolean = fields.find { field -> values.find { field.match(it) } != null } == null
+
+    fun valid(fields: List<Field>, ticket: List<Int>): Boolean = ticket.all { v ->
+//        if(v == 975) {
+//            println(fields.filter { it.match(v) })
+//        }
+//        fields.any { field -> field.match(v) }
+        fields.any { it.match(v) }
+    }
+
+    fun invalid(fields: List<Field>, ticket: List<Int>): Boolean = !valid(fields, ticket)
+
+    override fun solveb(input: List<String>): Any {
+        val fields = input.map { it.trim() }.takeWhile { it.isNotEmpty() }.map { parseField(it) }
+        val myTicket = input.drop(fields.size+1).drop(1)[0].split(",").map { it.toInt() }
+        val otherTickets = input.drop(fields.size).drop(5).map { it.split(",").map { p -> p.toInt() } }
+        val validTickets = otherTickets.filter { ticket -> !invalid(fields, ticket) }
+        val fieldCandidates = myTicket.map { HashSet<Field>(fields) }
+        while (!fieldCandidates.all { it.size == 1 }) {
+            fieldCandidates.withIndex().forEach { if(it.value.size == 0) throw RuntimeException("empty field: ${it.index}") }
+            validTickets.forEach { ticket ->
+                ticket.withIndex().forEach { entry ->
+                    fieldCandidates[entry.index].removeIf { f -> !f.match(entry.value) }
+                }
+            }
+            fieldCandidates.withIndex().filter { it.value.size == 1 }.forEach { s -> fieldCandidates.withIndex().filter { it.index != s.index }.forEach { it.value.removeAll(s.value) } }
+            fieldCandidates.withIndex().forEach{ println("index ${it.index} size: ${it.value.size}") }
+        }
+        return fieldCandidates.asSequence().map { it.first() }.withIndex().filter { it.value.name.startsWith("departure") }.map { myTicket[it.index].toLong() }.fold(1L){ a, b -> a*b}
     }
 
 }
 
 fun main() {
-    println(Day16.solve("""
-        class: 1-3 or 5-7
-        row: 6-11 or 33-44
-        seat: 13-40 or 45-50
+//    println(Day16.solveb("""
+//        class: 0-1 or 4-19
+//        row: 0-5 or 8-19
+//        seat: 0-13 or 16-19
+//
+//        your ticket:
+//        11,12,13
+//
+//        nearby tickets:
+//        3,9,18
+//        15,1,5
+//        5,14,9
+//    """.trimIndent()))
 
-        your ticket:
-        7,1,14
 
-        nearby tickets:
-        7,3,47
-        40,4,50
-        55,2,20
-        38,6,12
-    """.trimIndent()))
-
-
-    println(Day16.solve("day16.txt"))
+    println(Day16.solveb("day16.txt"))
 }
