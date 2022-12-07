@@ -6,6 +6,35 @@ import java.io.FileReader
 
 interface Solver {
 
+    fun List<String>.splitOnEmpty(): Pair<List<String>, List<String>> {
+        val first = this.takeWhile { it.isNotEmpty() }
+        val second = this.drop(first.size + 1)
+        return Pair(first, second)
+    }
+
+    fun List<String>.partitionOnEmpty(): List<List<String>> {
+        val head = listOf(this.takeWhile { it.isNotEmpty() })
+        val rest = this.drop(head[0].size+1)
+        return if(rest.isEmpty()) head else head + rest.partitionOnEmpty()
+    }
+
+    fun List<String>.ints(): List<Int> = intsN().map { it.first() }
+    fun List<String>.ints2(): List<Pair<Int, Int>>  = intsN().map { Pair(it[0], it[1]) }
+    fun List<String>.ints3(): List<Triple<Int, Int, Int>> = intsN().map { Triple(it[0], it[1], it[1]) }
+
+    fun List<String>.intsN(): List<List<Int>> {
+        val re = Regex("(-?[0-9]+)")
+        return this.map { re.findAll(it).toList().map { found -> found.value.toInt() } }
+    }
+
+    fun <A> List<List<A>>.transposed(): List<List<A>> {
+        return this[0].indices.map { col -> this.indices.map { row -> this[row][col] } }
+    }
+
+    fun List<String>.join(): String = this.joinToString(separator = "")
+
+    fun <A> List<A>.splitAt(index: Int): List<List<A>> = listOf(this.take(index), this.drop(index))
+
     fun solveb(input: String): Any {
         if (File(input).exists()) {
             val reader = BufferedReader(FileReader(input))
