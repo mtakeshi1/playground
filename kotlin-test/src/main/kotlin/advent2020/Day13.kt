@@ -12,8 +12,9 @@ object Day13 : Solver {
     override fun solve(input: List<String>): Any {
         val time = input[0].toInt()
         val departures = input[1].split(",").filter { it != "x" }.map { it.toInt() }
-        val selected = departures.map { Pair(it, minTime(time, it)) }.minBy { it.second }
-        return selected.first * selected.second
+//        val selected = departures.map { Pair(it, minTime(time, it)) }.minBy { it.second }
+//        return selected.first * selected.second
+        return ""
     }
 
 
